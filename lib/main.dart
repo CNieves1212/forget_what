@@ -33,7 +33,11 @@ class _MyAppState extends State<MyApp> {
         pages: [
           MaterialPage(key: HomePage.valueKey, child: HomePage(searchForTerm: _searchForTerm,)),
               if(_searchedTerm != null && _searchedTerm.isNotEmpty)
+<<<<<<< HEAD
                 MaterialPage(key: ItemDetails.valueKey, child: ItemDetails(title: _searchedTerm)),
+=======
+                MaterialPage(key: ItemDetails.valueKey, child: ItemDetails()),
+>>>>>>> a3fbb5a496afa8c7775152b7d83b8ff885e72f62
         ],
         onPopPage: (route, result) {
           //return route.dipPop(result);      
