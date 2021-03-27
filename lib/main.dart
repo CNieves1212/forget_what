@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+<<<<<<< Updated upstream
       home: Navigator(
         pages: [
           MaterialPage(key: HomePage.valueKey, child: HomePage(searchForTerm: _searchForTerm,)),
@@ -44,5 +45,14 @@ class _MyAppState extends State<MyApp> {
         }
       ),
     );
+=======
+      initialRoute: '/home_page', //first page loaded
+      routes: { //all pages
+        '/home_page': (context) => HomePage(),
+        '/add_item': (context) => AddItem(),
+        '/item_details': (context) => ItemDetails(),
+      },
+      );
+>>>>>>> Stashed changes
   }
 }
