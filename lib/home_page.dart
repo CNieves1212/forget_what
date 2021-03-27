@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  static final valueKey = ValueKey('HomePage');
 
-  HomePage({Key key, this.searchForTerm}) : super(key: key);
-  final ValueChanged<String> searchForTerm;
-  
+
+
+class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePage();
   }
@@ -13,40 +11,107 @@ class HomePage extends StatefulWidget {
 
 
   class _HomePage extends State<HomePage> {
+    Map itemList = {};
+    Map itemData = {};
     
+    // String itemName;
+    // String itemCount;
+    // String itemType;
+    // String itemSubtractBy;
 
-    final _textFieldController = TextEditingController();
+    double iconSize = 24;
 
-    void _search() {
-      widget.searchForTerm(_textFieldController.text);
-    }
-  
-    Widget searchForm() {
-    return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
+    Widget buildNewItem() {
+      return Column(
         children: [
-          TextField(
-            controller: _textFieldController,
-            decoration: InputDecoration(labelText: 'Enter Item'),
+          Row(
+            children: [
+              TextButton(
+                child: Text(itemData['itemName']),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/item_details', arguments: {
+                    'itemName': itemData['itemName'],
+                    'itemCount': itemData['itemCount'],
+                    'itemType': itemData['itemType'],
+                    'itemSubtractBy': itemData['itemSubtractBy'],
+                  });
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.remove),
+                iconSize: iconSize,
+
+                onPressed: () {
+                  setState(() {
+                    itemData['itemCount'] = (int.parse(itemData['itemCount']) - int.parse(itemData['itemSubtractBy'])).toString();
+                  });
+                },
+              ),
+              Text(itemData['itemCount']),
+              Text(itemData['itemType']),
+              IconButton(
+                icon: const Icon(Icons.add_sharp),
+                iconSize: iconSize,
+
+                onPressed: () {
+                  setState(() {
+                    itemData['itemCount'] = (int.parse(itemData['itemCount']) + int.parse(itemData['itemSubtractBy'])).toString();
+                  });
+                },
+              ),
+            ],
           ),
-          TextButton(
-          onPressed: () => _search(),
-          //color: Colors.purple,
-          //textColor: Colors.white,            
-          child: Text("Search"))
         ],
-        mainAxisAlignment: MainAxisAlignment.start,
-      ),
-    );
+      );
+    
 }
+
+
+
+
+@override
+  void initState() {
+    super.initState();
+  }
+
+
 @override
 Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(title: Text('Forget What?'),),
-        body:  searchForm(),      
 
-    );
+  itemData = ModalRoute.of(context).settings.arguments;
+  // setState(() {
+  //   itemList[itemData['itemName']] = itemData;
+  // });
+
+  return Scaffold(
+    appBar: AppBar(
+      centerTitle: true,
+      title: Text('Forget What?'),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.add_circle),
+          tooltip: 'Add Item',
+          onPressed: () {
+            Navigator.pushNamed(context, '/add_item');
+          }
+        )
+      ]
+    ),
+    
+    body:  
+     Column(
+       children: [
+         Row(
+           children: [
+             if(itemData != null && itemData.length > 0)
+             buildNewItem(),
+           ],
+         ),
+       ],
+     ),
+            
+
+);
   }
 
     
