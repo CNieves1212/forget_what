@@ -13,8 +13,8 @@ class _AddItem extends State<AddItem> {
   final itemTypeController = TextEditingController();
   final itemSubtractByController = TextEditingController();
 
-
-
+  double textBoxWidth = 200;
+  double submitButtonWidth = 100;
 
 
 @override
@@ -36,7 +36,7 @@ class _AddItem extends State<AddItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 200,
+                width: textBoxWidth,
                 child: 
                   TextField(
                     decoration: InputDecoration(
@@ -49,7 +49,7 @@ class _AddItem extends State<AddItem> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
-                width: 200,
+                width: textBoxWidth,
                 child: 
                   TextField( // replace with a scrolling picker
                     decoration: InputDecoration(
@@ -72,7 +72,7 @@ class _AddItem extends State<AddItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 200,
+                width: textBoxWidth,
                 child: 
                   TextField(
                     decoration: InputDecoration(
@@ -85,7 +85,7 @@ class _AddItem extends State<AddItem> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
-                width: 200,
+                width: textBoxWidth,
                 child: 
                   TextField( // replace with a scrolling picker
                     decoration: InputDecoration(
@@ -104,7 +104,7 @@ class _AddItem extends State<AddItem> {
 
           // Submit Button 
           Container(
-            width: 100,
+            width: submitButtonWidth,
             child: TextButton(
               child: Text("Submit"),
               onPressed: () {

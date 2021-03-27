@@ -11,30 +11,19 @@ class HomePage extends StatefulWidget {
 
 
   class _HomePage extends State<HomePage> {
-    Map itemList = {};
     Map itemData = {};
-    
-    // String itemName;
-    // String itemCount;
-    // String itemType;
-    // String itemSubtractBy;
 
     double iconSize = 24;
 
-    Widget buildNewItem() {
+    Widget buildNewItem(Map oneItem,int j) {
       return Column(
         children: [
           Row(
             children: [
               TextButton(
-                child: Text(itemData['itemName']),
+                child: Text(oneItem['itemName']),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/item_details', arguments: {
-                    'itemName': itemData['itemName'],
-                    'itemCount': itemData['itemCount'],
-                    'itemType': itemData['itemType'],
-                    'itemSubtractBy': itemData['itemSubtractBy'],
-                  });
+                  Navigator.pushNamed(context, '/item_details', arguments: oneItem);
                 },
               ),
               IconButton(
@@ -43,19 +32,19 @@ class HomePage extends StatefulWidget {
 
                 onPressed: () {
                   setState(() {
-                    itemData['itemCount'] = (int.parse(itemData['itemCount']) - int.parse(itemData['itemSubtractBy'])).toString();
+                    oneItem['itemCount'] = (int.parse(oneItem['itemCount']) - int.parse(oneItem['itemSubtractBy'])).toString();
                   });
                 },
               ),
-              Text(itemData['itemCount']),
-              Text(itemData['itemType']),
+              Text(oneItem['itemCount']),
+              Text(oneItem['itemType']),
               IconButton(
                 icon: const Icon(Icons.add_sharp),
                 iconSize: iconSize,
 
                 onPressed: () {
                   setState(() {
-                    itemData['itemCount'] = (int.parse(itemData['itemCount']) + int.parse(itemData['itemSubtractBy'])).toString();
+                    oneItem['itemCount'] = (int.parse(oneItem['itemCount']) + int.parse(oneItem['itemSubtractBy'])).toString();
                   });
                 },
               ),
@@ -66,9 +55,6 @@ class HomePage extends StatefulWidget {
     
 }
 
-
-
-
 @override
   void initState() {
     super.initState();
@@ -77,11 +63,15 @@ class HomePage extends StatefulWidget {
 
 @override
 Widget build(BuildContext context) {
+  List<Map<String, dynamic>> allItems = [];
 
   itemData = ModalRoute.of(context).settings.arguments;
-  // setState(() {
-  //   itemList[itemData['itemName']] = itemData;
-  // });
+  if(itemData != null && itemData.length > 0) {
+    allItems.add(itemData);
+  }
+
+ 
+
 
   return Scaffold(
     appBar: AppBar(
@@ -98,17 +88,35 @@ Widget build(BuildContext context) {
       ]
     ),
     
-    body:  
-     Column(
-       children: [
-         Row(
-           children: [
-             if(itemData != null && itemData.length > 0)
-             buildNewItem(),
-           ],
-         ),
-       ],
-     ),
+    body: ListView.builder(
+      itemCount: allItems.length,
+      itemBuilder: (context, int index) {
+        Map oneItem = allItems[index];
+
+        return ListTile (
+          title: buildNewItem(oneItem, index),
+        );
+      }
+
+    )
+
+
+
+
+    
+    //  Column(
+    //    children: [
+    //      Row(
+    //        children: [
+
+    //          for(int j = 0; j < allItems.length; j++)
+    //            if(itemData != null && itemData.length > 0)
+    //               buildNewItem(allItems, j),
+                  
+    //        ],
+    //      ),
+    //    ],
+    //  ),
             
 
 );
