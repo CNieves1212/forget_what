@@ -39,9 +39,11 @@ class HomePage extends StatefulWidget {
                   //pushes to item details page
                   Navigator.pushNamed(context, '/item_details', arguments: {
                     'itemName': itemData['itemName'],
+                    //'totalAmount': itemData['totalAmount'],
                     'itemCount': itemData['itemCount'],
                     'itemType': itemData['itemType'],
                     'itemSubtractBy': itemData['itemSubtractBy'],
+                    'takenAmount': itemData['takenAmount'],
                   });
                 },
               ),
@@ -52,6 +54,7 @@ class HomePage extends StatefulWidget {
                 onPressed: () {
                   setState(() {
                     itemData['itemCount'] = (int.parse(itemData['itemCount']) - int.parse(itemData['itemSubtractBy'])).toString();
+                    itemData['takenAmount'] = (int.parse(itemData['takenAmount']) + int.parse(itemData['itemSubtractBy'])).toString();
                   });
                 },
               ),
@@ -64,6 +67,7 @@ class HomePage extends StatefulWidget {
                 onPressed: () {
                   setState(() {
                     itemData['itemCount'] = (int.parse(itemData['itemCount']) + int.parse(itemData['itemSubtractBy'])).toString();
+                    //itemData['takenAmount'] = (int.parse(itemData['takenAmount']) - int.parse(itemData['itemSubtractBy'])).toString();
                   });
                 },
               ),

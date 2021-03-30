@@ -12,7 +12,11 @@ class _AddItem extends State<AddItem> {
   final itemCountController = TextEditingController();
   final itemTypeController = TextEditingController();
   final itemSubtractByController = TextEditingController();
+<<<<<<< Updated upstream
   double textboxwidth = 100;
+=======
+  double widthsize = 100;
+>>>>>>> Stashed changes
 
 
 
@@ -40,7 +44,11 @@ class _AddItem extends State<AddItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+<<<<<<< Updated upstream
                 width: textboxwidth,
+=======
+                width: widthsize,
+>>>>>>> Stashed changes
                 child: 
                   TextField(
                     decoration: InputDecoration(
@@ -53,7 +61,11 @@ class _AddItem extends State<AddItem> {
               ),
               Container(
                 margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
+<<<<<<< Updated upstream
                 width: textboxwidth,
+=======
+                width: widthsize,
+>>>>>>> Stashed changes
                 child: 
                   TextField( // replace with a scrolling picker
                     decoration: InputDecoration(
@@ -76,7 +88,11 @@ class _AddItem extends State<AddItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+<<<<<<< Updated upstream
                 width: textboxwidth,
+=======
+                width: widthsize,
+>>>>>>> Stashed changes
                 child: 
                   TextField(
                     decoration: InputDecoration(
@@ -84,12 +100,15 @@ class _AddItem extends State<AddItem> {
                       border: OutlineInputBorder(),
                     ),
                     controller: itemCountController,
-                    
                   ),
               ),
               Container(
                 margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
+<<<<<<< Updated upstream
                 width: textboxwidth,
+=======
+                width: widthsize,
+>>>>>>> Stashed changes
                 child: 
                   TextField( // replace with a scrolling picker
                     decoration: InputDecoration(
@@ -108,13 +127,18 @@ class _AddItem extends State<AddItem> {
 
           // Submit Button 
           Container(
+<<<<<<< Updated upstream
             width: textboxwidth,
+=======
+            width: widthsize,
+>>>>>>> Stashed changes
             child: TextButton(
               child: Text("Submit"),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, arguments: {
                   'itemName': itemNameController.text,
                   'itemCount': itemCountController.text,
+                  //'totalAmount': itemCountController.text,
                   'itemType': itemTypeController.text,
                   'itemSubtractBy': itemSubtractByController.text,
                 });
