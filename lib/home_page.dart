@@ -1,149 +1,136 @@
 import 'package:flutter/material.dart';
-// testing 
-class HomePage extends StatefulWidget {
-  static final valueKey = ValueKey('HomePage');
 
-  HomePage({Key key, this.searchForTerm}) : super(key: key);
-  final ValueChanged<String> searchForTerm;
-  
+
+
+
+class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePage();
-  }
-  
-
-
-  class _HomePage extends State<HomePage> {
-    
-
-    final _textFieldController = TextEditingController();
-
-    void _search() {
-      widget.searchForTerm(_textFieldController.text);
-    }
-  
-    Widget searchForm() {
-    return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-<<<<<<< Updated upstream
-          TextField(
-            controller: _textFieldController,
-            decoration: InputDecoration(labelText: 'Enter Item'),
-=======
-          Row(
-            children: [
-              TextButton(
-                child: Text(itemData['itemName']),
-                onPressed: () {
-                  //pushes to item details page
-                  Navigator.pushNamed(context, '/item_details', arguments: {
-                    'itemName': itemData['itemName'],
-                    //'totalAmount': itemData['totalAmount'],
-                    'itemCount': itemData['itemCount'],
-                    'itemType': itemData['itemType'],
-                    'itemSubtractBy': itemData['itemSubtractBy'],
-                    'takenAmount': itemData['takenAmount'],
-                  });
-                },
-              ),
-              IconButton( //subtract button
-                icon: const Icon(Icons.remove),
-                iconSize: iconSize,
-
-                onPressed: () {
-                  setState(() {
-                    itemData['itemCount'] = (int.parse(itemData['itemCount']) - int.parse(itemData['itemSubtractBy'])).toString();
-                    itemData['takenAmount'] = (int.parse(itemData['takenAmount']) + int.parse(itemData['itemSubtractBy'])).toString();
-                  });
-                },
-              ),
-              Text(itemData['itemCount']),
-              Text(itemData['itemType']),
-              IconButton( //add button
-                icon: const Icon(Icons.add_sharp),
-                iconSize: iconSize,
-
-                onPressed: () {
-                  setState(() {
-                    itemData['itemCount'] = (int.parse(itemData['itemCount']) + int.parse(itemData['itemSubtractBy'])).toString();
-                    //itemData['takenAmount'] = (int.parse(itemData['takenAmount']) - int.parse(itemData['itemSubtractBy'])).toString();
-                  });
-                },
-              ),
-            ],
->>>>>>> Stashed changes
-          ),
-          TextButton(
-          onPressed: () => _search(),
-          //color: Colors.purple,
-          //textColor: Colors.white,            
-          child: Text("Search"))
-        ],
-        mainAxisAlignment: MainAxisAlignment.start,
-      ),
-    );
 }
-<<<<<<< Updated upstream
-=======
 
 
 
+class _HomePage extends State<HomePage> {
+  Map itemData = {};
 
-@override //overrides what's already there
-  void initState() {// initializes the state of the page
+  double iconSize = 24;
+
+  Widget buildNewItem(Map oneItem,int j) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            TextButton(
+              child: Text(oneItem['itemName']),
+              onPressed: () {
+                Navigator.pushNamed(context, '/item_details', arguments: oneItem);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.remove),
+              iconSize: iconSize,
+
+              onPressed: () {
+                setState(() {
+                  oneItem['itemCount'] = (int.parse(oneItem['itemCount']) - int.parse(oneItem['itemSubtractBy'])).toString();
+                  oneItem['takenAmount'] = (int.parse(oneItem['takenAmount']) + int.parse(oneItem['itemSubtractBy'])).toString();
+                  //create something that adds time
+                });
+              },
+            ),
+            Text(oneItem['itemCount']),
+            Text(oneItem['itemType']),
+            IconButton(
+              icon: const Icon(Icons.add_sharp),
+              iconSize: iconSize,
+
+              onPressed: () {
+                setState(() {
+                  oneItem['itemCount'] = (int.parse(oneItem['itemCount']) + int.parse(oneItem['itemSubtractBy'])).toString();
+                });
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+
+  }
+
+  @override
+  void initState() {
     super.initState();
   }
 
 
->>>>>>> Stashed changes
-@override
-Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(title: Text('Forget What?'),),
-        body:  searchForm(),      
+  @override
+  Widget build(BuildContext context) {
+    List<Map<String, dynamic>> allItems = [];
 
-<<<<<<< Updated upstream
-    );
-=======
-  itemData = ModalRoute.of(context).settings.arguments;
-  // setState(() {
-  //   itemList[itemData['itemName']] = itemData;
-  // });
+    itemData = ModalRoute.of(context).settings.arguments;
+    if(itemData != null && itemData.length > 0) {
+      allItems.add(itemData);
+    }
 
-  return Scaffold(
-    appBar: AppBar(
-      centerTitle: true,
-      title: Text('Forget What?'),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.add_circle),
-          tooltip: 'Add Item',
-          onPressed: () {
-            Navigator.pushNamed(context, '/add_item'); //move between pages
-          }
+
+
+
+    return Scaffold(
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text('Forget What?'),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.add_circle),
+                  tooltip: 'Add Item',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/add_item');
+                  }
+              )
+            ]
+        ),
+
+        body: ListView.builder(
+            itemCount: allItems.length,
+            itemBuilder: (context, int index) {
+              Map oneItem = allItems[index];
+
+              return ListTile (
+                title: buildNewItem(oneItem, index),
+              );
+            }
+
         )
-      ]
-    ),
-    
-    body:  
-     Column(
-       children: [
-         Row(
-           children: [
-             if(itemData != null && itemData.length > 0) //doesn't add somethingwithnull
-             buildNewItem(),
-           ],
-         ),
-       ],
-     ),
-            
 
-);
->>>>>>> Stashed changes
+
+
+
+
+      //  Column(
+      //    children: [
+      //      Row(
+      //        children: [
+
+      //          for(int j = 0; j < allItems.length; j++)
+      //            if(itemData != null && itemData.length > 0)
+      //               buildNewItem(allItems, j),
+
+      //        ],
+      //      ),
+      //    ],
+      //  ),
+
+
+    );
   }
 
-    
-    
+
+
 }
+
+
+
+
+
+
 

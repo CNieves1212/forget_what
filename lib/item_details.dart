@@ -13,15 +13,17 @@ class _ItemDetails extends State<ItemDetails> {
   
   @override
   Widget build(BuildContext context) {
+      Map itemData = ModalRoute.of(context).settings.arguments;
+
+      Widget customTitleWidget(String subTitle) {
+        return Row(
+          children: [
+            Text(subTitle),
+          ],
+        );
+      }
+
       return Scaffold(
-<<<<<<< Updated upstream
-        appBar: AppBar(title: Text('ItemDetails'),),
-<<<<<<< HEAD
-        body:  Text(item),      
-=======
-        body:  Text("test"),
->>>>>>> a3fbb5a496afa8c7775152b7d83b8ff885e72f62
-=======
         appBar: AppBar(title: Text(itemData['itemName']),),
         body: 
         Column(children: [
@@ -29,7 +31,8 @@ class _ItemDetails extends State<ItemDetails> {
           Row(children: [
             customTitleWidget('Total Amount'),
             TextButton(
-              child: Text(itemData['itemCount']),
+              child: Text(itemData['totalAmount']),
+              onPressed: (){},
               //child: Text(itemData['totalAmount']),
             ),
           ],),
@@ -38,6 +41,7 @@ class _ItemDetails extends State<ItemDetails> {
             customTitleWidget('Amount Taken'),
             TextButton(
               child: Text(itemData['takenAmount']),
+              onPressed: (){},
             ),
           ],),
           // Row 3: Sub Title 2
@@ -46,11 +50,11 @@ class _ItemDetails extends State<ItemDetails> {
             customTitleWidget('Amount Left'),
             TextButton(
               child: Text(itemData['itemCount']),
+              onPressed: (){},
             ),
           ],),
 
         ],),
->>>>>>> Stashed changes
     );
   }
 }
