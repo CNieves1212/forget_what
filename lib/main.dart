@@ -22,8 +22,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/home_page',
-      routes: {
+      initialRoute: '/home_page', //first page loaded
+      routes: { //all pages
         '/home_page': (context) => HomePage(),
         '/add_item': (context) => AddItem(),
         '/item_details': (context) => ItemDetails(),
