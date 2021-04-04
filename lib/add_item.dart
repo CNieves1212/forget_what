@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/cupertino.dart';
 
 
 class AddItem extends StatefulWidget {
@@ -10,12 +10,12 @@ class AddItem extends StatefulWidget {
 class _AddItem extends State<AddItem> {
   final itemNameController = TextEditingController();
   final itemCountController = TextEditingController();
-  final itemTypeController = TextEditingController();
+  String itemType;
   final itemSubtractByController = TextEditingController();
 
   double textBoxWidth = 200;
   double submitButtonWidth = 100;
-
+  double pickerSize = 50;
 
 @override
   void initState() {
@@ -51,13 +51,18 @@ class _AddItem extends State<AddItem> {
                 margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
                 width: textBoxWidth,
                 child: 
-                  TextField( // replace with a scrolling picker
-                    decoration: InputDecoration(
-                      hintText: 'Type',
-                      border: OutlineInputBorder(),
-                    ),
-                    controller: itemTypeController,
-                    
+                  CupertinoPicker(
+                    onSelectedItemChanged: (int i) {
+                      List typeList = ['Pills', 'oz','mg','mL'];
+                      itemType = typeList[i];
+                    },
+                    itemExtent: pickerSize,
+                    children: [
+                      Text('Pills'),
+                      Text('oz'),
+                      Text('mg'),
+                      Text('mL'),
+                    ],
                   ),
               ),
             ],
@@ -111,7 +116,7 @@ class _AddItem extends State<AddItem> {
                 Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, arguments: {
                   'itemName': itemNameController.text,
                   'itemCount': itemCountController.text,
-                  'itemType': itemTypeController.text,
+                  'itemType': itemType,
                   'itemSubtractBy': itemSubtractByController.text,
                 });
               },

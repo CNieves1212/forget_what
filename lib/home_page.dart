@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+// import './main.dart' as test;
 
-
-
+List<Map<String, dynamic>> allItems = [];
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,11 +11,13 @@ class HomePage extends StatefulWidget {
 
 
   class _HomePage extends State<HomePage> {
+    
     Map itemData = {};
-
+    
     double iconSize = 24;
 
     Widget buildNewItem(Map oneItem,int j) {
+      
       return Column(
         children: [
           Row(
@@ -41,7 +43,7 @@ class HomePage extends StatefulWidget {
               IconButton(
                 icon: const Icon(Icons.add_sharp),
                 iconSize: iconSize,
-
+                // currently adds another copy of itself to the listbuilder
                 onPressed: () {
                   setState(() {
                     oneItem['itemCount'] = (int.parse(oneItem['itemCount']) + int.parse(oneItem['itemSubtractBy'])).toString();
@@ -63,14 +65,15 @@ class HomePage extends StatefulWidget {
 
 @override
 Widget build(BuildContext context) {
-  List<Map<String, dynamic>> allItems = [];
+  
 
-  itemData = ModalRoute.of(context).settings.arguments;
-  if(itemData != null && itemData.length > 0) {
+  
+  setState(() {
+    itemData = ModalRoute.of(context).settings.arguments;
+    if(itemData != null && itemData.length > 0) {
     allItems.add(itemData);
   }
-
- 
+  });
 
 
   return Scaffold(
@@ -92,9 +95,12 @@ Widget build(BuildContext context) {
       itemCount: allItems.length,
       itemBuilder: (context, int index) {
         Map oneItem = allItems[index];
-
-        return ListTile (
-          title: buildNewItem(oneItem, index),
+       
+        return Card (
+          child : ListTile(
+            onTap: () {},
+            title: buildNewItem(oneItem, index),
+          ),
         );
       }
 
