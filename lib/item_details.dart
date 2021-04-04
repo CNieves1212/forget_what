@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class ItemDetails extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ItemDetails();
@@ -19,7 +17,7 @@ Map itemData;
   
   @override
   Widget build(BuildContext context) {
-      itemData = ModalRoute.of(context).settings.arguments;
+      Map itemData = ModalRoute.of(context).settings.arguments;
 
       // Style to make sub titles look better
       Widget customTitleWidget(String subTitle) {
@@ -33,21 +31,29 @@ Map itemData;
       return Scaffold(
         appBar: AppBar(title: Text(itemData['itemName']),),
         body: 
-        Column(children: [
-          // Row 1: Sub Title
-          Row(children: [
-            customTitleWidget('Amount'),
-          ],),
-          // Row 2: Item amount and subtractBy amount
-          Row(children: [
-            
-          ],),
+          Column(
+            children: [
+            // Row 1: Sub Title
+              Row(
+                children: [
+                  customTitleWidget('Total Amount'),
+                ],
+              ),
+              // Row 2: Sub Title 1
+              Row(
+                children: [
+                  customTitleWidget('Amount Taken'),
+                ],
+              ),
           // Row 3: Sub Title 2
-          Row(children: [
-            customTitleWidget('Something Else'),
-          ],),
-        ],),
-    );
+              Row(
+                children: [
+                  customTitleWidget('Amount Left'),
+                ],
+            ),
+          ] ,
+          ),
+      );
   }
 }
 
