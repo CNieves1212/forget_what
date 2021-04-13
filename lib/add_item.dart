@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'all_item_data.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -14,13 +14,17 @@ class _AddItem extends State<AddItem> {
   final itemSubtractByController = TextEditingController();
   String totalAmount;
   String takenAmount;
+  
+  bool logOption = false; // needs to start initialized for switch
+
+  bool timerOption = false; // needs to start initialized for switch
+  int timerHowOften; // every x hour reminders
+
 
 
   double textBoxWidth = 100;
   double submitButtonWidth = 100;
   double pickerSize = 50;
-
-
 
   @override
     void initState() {
@@ -57,8 +61,6 @@ class _AddItem extends State<AddItem> {
                     child: CupertinoPicker(
                       onSelectedItemChanged: (int i) {
                       List typeList = ['Pills', 'oz','mg','mL'];
-                      print(i);
-                      print(typeList[i]);
                       itemType = typeList[i];
                     },
                       itemExtent: pickerSize,
@@ -111,6 +113,43 @@ class _AddItem extends State<AddItem> {
               ),
             ),
 
+            // Row , keep log switch
+            Padding(
+              padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Keep Log?'),
+                  CupertinoSwitch(
+                    value: logOption,
+                    onChanged: (bool) {
+                      setState(() {
+                        logOption = !logOption;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            // Row 4, timer options
+            Padding(
+              padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Timer?'),
+                  CupertinoSwitch(
+                    value: timerOption,
+                    onChanged: (bool) {
+                      setState(() {
+                        timerOption = !timerOption;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
 
             // Submit Button
             Container(
@@ -118,14 +157,20 @@ class _AddItem extends State<AddItem> {
               child: TextButton(
                 child: Text("Submit"),
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, arguments: {
-                    'itemName': itemNameController.text,
-                    'itemCount': itemCountController.text,
-                    'totalAmount': itemCountController.text,
-                    'itemType': itemType,
-                    'itemSubtractBy': itemSubtractByController.text,
-                    'takenAmount' : '0',
-                  });
+                  AllItemData currentItem = new AllItemData();
+                  currentItem.itemInfo['itemName'] = itemNameController.text;
+                  currentItem.itemInfo['itemCount'] = itemCountController.text;
+                  currentItem.itemInfo['totalAmount'] = itemCountController.text;
+                  currentItem.itemInfo['itemType'] = itemType;
+                  currentItem.itemInfo['itemSubtractBy'] = itemSubtractByController.text;
+                  currentItem.itemInfo['takenAmount'] = '0';
+
+                  currentItem.itemInfo['logOption'] = logOption;
+
+                  currentItem.itemInfo['timerOption'] = timerOption;
+                  currentItem.itemInfo['timerHowOften'] = timerHowOften;
+                  Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, 
+                                                    arguments: currentItem.itemInfo);
                 },
               ),
             ),

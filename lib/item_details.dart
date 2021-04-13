@@ -37,20 +37,33 @@ Map itemData;
               Row(
                 children: [
                   customTitleWidget('Total Amount'),
-                ],
-              ),
+                ],),
               // Row 2: Sub Title 1
               Row(
                 children: [
                   customTitleWidget('Amount Taken'),
-                ],
-              ),
+                ],),
           // Row 3: Sub Title 2
               Row(
                 children: [
                   customTitleWidget('Amount Left'),
-                ],
-            ),
+                ],),
+            // delete button
+            Row (
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  iconSize: 24,
+                  onPressed: () {
+                    setState(() {
+                      // delete item from list
+                      
+                    });
+                  },
+                ),
+            ],)
           ] ,
           ),
       );
