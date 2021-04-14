@@ -12,13 +12,13 @@ class _AddItem extends State<AddItem> {
   final itemCountController = TextEditingController();
   String itemType = 'Pills'; // Pills default value, if not set passes null
   final itemSubtractByController = TextEditingController();
-  String totalAmount;
-  String takenAmount;
+  String totalAmount = '0';
+  String takenAmount = '0';
   
   bool logOption = false; // needs to start initialized for switch
 
-  bool timerOption = false; // needs to start initialized for switch
-  int timerHowOften; // every x hour reminders
+  bool notificationOption = false; // needs to start initialized for switch
+  int notifHowOften; // every x hour reminders
 
 
 
@@ -132,7 +132,7 @@ class _AddItem extends State<AddItem> {
               ),
             ),
 
-            // Row 4, timer options
+            // Row 4, notification/timer option
             Padding(
               padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
               child: Row(
@@ -140,10 +140,10 @@ class _AddItem extends State<AddItem> {
                 children: [
                   Text('Timer?'),
                   CupertinoSwitch(
-                    value: timerOption,
+                    value: notificationOption,
                     onChanged: (bool) {
                       setState(() {
-                        timerOption = !timerOption;
+                        notificationOption = !notificationOption;
                       });
                     },
                   ),
@@ -167,8 +167,8 @@ class _AddItem extends State<AddItem> {
 
                   currentItem.itemInfo['logOption'] = logOption;
 
-                  currentItem.itemInfo['timerOption'] = timerOption;
-                  currentItem.itemInfo['timerHowOften'] = timerHowOften;
+                  currentItem.itemInfo['notificationOption'] = notificationOption;
+                  currentItem.itemInfo['notifHowOften'] = notifHowOften;
                   Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, 
                                                     arguments: currentItem.itemInfo);
                 },
