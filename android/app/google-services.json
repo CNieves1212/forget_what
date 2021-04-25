@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "825190010112",
+    "project_id": "forgetwhat-57d28",
+    "storage_bucket": "forgetwhat-57d28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825190010112:android:92a4d9312be4c8d51e77e5",
+        "android_client_info": {
+          "package_name": "com.example.forget_what"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825190010112-vkgeep99gkbfnirrngeu7cjgfqsj52b2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFGRu74K_i22IYhVohH1cDAlePweT6HGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825190010112-vkgeep99gkbfnirrngeu7cjgfqsj52b2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "825190010112-30cfh5mb4akn108q8tdtj9dt9v1muqov.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.forgetWhat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'all_item_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItem extends State<AddItem> {
+  final db = FirebaseFirestore.instance;
+  
   final itemNameController = TextEditingController();
   final itemCountController = TextEditingController();
   String itemType = 'Pills'; // Pills default value, if not set passes null
@@ -29,6 +32,7 @@ class _AddItem extends State<AddItem> {
   @override
     void initState() {
       super.initState();
+      
     }
 
   @override
@@ -156,7 +160,9 @@ class _AddItem extends State<AddItem> {
               width: submitButtonWidth,
               child: TextButton(
                 child: Text("Submit"),
-                onPressed: () {
+                onPressed: () async {
+                  
+
                   AllItemData currentItem = new AllItemData();
                   currentItem.itemInfo['itemName'] = itemNameController.text;
                   currentItem.itemInfo['itemCount'] = itemCountController.text;
@@ -171,6 +177,8 @@ class _AddItem extends State<AddItem> {
                   currentItem.itemInfo['notifHowOften'] = notifHowOften;
                   Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, 
                                                     arguments: currentItem.itemInfo);
+                                                    
+                  await db.collection('newItems').add(currentItem.toJson());
                 },
               ),
             ),

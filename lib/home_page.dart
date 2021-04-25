@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'dart:async';
+// import 'dart:async';
 import 'all_item_data.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,7 +31,7 @@ class _HomePage extends State<HomePage> {
     if (newItem != null && newItem.length > 0) {
       allItemsList.add(newItem);
     }
-
+    print('homepage refresh is $allItemsList');
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
@@ -64,8 +63,8 @@ class _HomePage extends State<HomePage> {
                     iconSize: iconSize,
                     onPressed: () {
                       setState(() {
-                        AllItemData().itemSubtract(oneItem);
-                        AllItemData().updateLog(oneItem);
+                        // AllItemData().itemSubtract(oneItem);
+                        // AllItemData().updateLog(oneItem);
                       });
                     },
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forget_what/all_item_data.dart';
 
 
 
@@ -30,6 +31,42 @@ Widget customLogOptionWidget(Map itemData, String preface) {
     return Placeholder(fallbackHeight: 0,fallbackWidth: 0, color: Colors.white,);
   }
 }
+
+Future<void> showMyDialog(context, itemData) async {
+                        return showDialog<void>(
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Delete Item?'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text('Are you sure you want to delete this item?'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Approve'),
+                                  onPressed: () {
+                                    // actually delete item here
+                                    allItemsList.removeWhere((item) => item['itemName'] == itemData['itemName']);
+                                    
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('Decline'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
 
 class ItemDetails extends StatefulWidget {
   @override
@@ -84,10 +121,7 @@ class _ItemDetails extends State<ItemDetails> {
                   child: const Icon(Icons.delete),
                   backgroundColor: Colors.red[700],
                   onPressed: () {
-                    setState(() {
-                      // delete item from list - Alert Dialog Box?
-                      
-                    });
+                    showMyDialog(context, itemData);
                   },
                 ),
             ],)

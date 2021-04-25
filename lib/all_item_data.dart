@@ -39,6 +39,35 @@ class AllItemData {
   void updateLog(itemData) {
 
   }
+
+  // void copyDelete(itemData) {
+  //   Map tempMap = itemData;
+  //   print('before $allItemsList');
+  //   for(Map item in allItemsList) {
+  //     allItemsList.removeWhere((item) => item['itemName'] == itemData['itemName']);
+  //   }
+      
+  //   print('after remove $allItemsList');
+
+  //   allItemsList.add(tempMap);
+
+  //   print('end $allItemsList');
+  // }
+  
+  Map<String, dynamic> toJson() =>{
+    'itemName': itemInfo['itemName'], 
+    'itemCount': itemInfo['itemCount'], 
+    'itemType': itemInfo['itemType'],
+    'itemSubtractBy': itemInfo['itemSubtractBy'],
+    'totalAmount': itemInfo['totalAmount'],
+    'takenAmount': itemInfo['takenAmount'],
+
+    'logOption': itemInfo['logOption'],
+    //'itemLog': itemInfo['itemLog'],
+    
+    'notificationOption': itemInfo['notificationOption'],
+    //'timerHowOften': itemInfo['timerHowOften'],
+  };
 }
 
  
