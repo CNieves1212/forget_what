@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:forget_what/services/authentication_services.dart';
 // import 'dart:async';
 import 'all_item_data.dart';
 
@@ -9,6 +10,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
+  final AuthenticationService _firebasAuth = AuthenticationService();
+
   double iconSize = 24;
 
   @override
@@ -37,6 +41,12 @@ class _HomePage extends State<HomePage> {
             centerTitle: true,
             title: Text('Forget What?'),
             actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.person),
+                onPressed: () async {
+                  await _firebasAuth.signOut();
+                },
+              ),
               IconButton(
                   icon: const Icon(Icons.add_circle),
                   tooltip: 'Add Item',
@@ -79,6 +89,7 @@ class _HomePage extends State<HomePage> {
                       });
                     },
                   ),
+                  
                 ],
               );
             }));
