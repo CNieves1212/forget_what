@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:forget_what/services/authentication_services.dart';
-// import 'dart:async';
-import 'all_item_data.dart';
+import 'package:provider/provider.dart';
+import 'package:forget_what/services/database.dart';
+import 'item_list_display.dart';
+import 'package:forget_what/models/item_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,10 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-
   final AuthenticationService _firebasAuth = AuthenticationService();
-
-  double iconSize = 24;
 
   @override
   void initState() {
@@ -22,76 +21,67 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // start to timey wimey stuff
+    // make and feed an empty initial data into streamprovider
+    // stream provider listens and fetches changes from firebase
+    List<ItemModel> emptySnapshoList;
+    return StreamProvider<List<ItemModel>>.value(
+      value: DatabaseService().itemList,
+      initialData: emptySnapshoList,
+      child: Scaffold(
+        drawer: Drawer(
+            child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // text on top
+              Container(
+                padding: EdgeInsets.only(top: 25, left: 10),
+                child: Text("Thanks for using Forget What?", style: TextStyle(fontSize: 15)),
+              ),
 
-    // void callbackHandle() {
-    //   // implement notifications
-    // }
+              // Disclaimer Page
+              Container(
+                // TextButton(
+                //   // child: Text("test"),
+                //   // onPressed: () {
+                //   //   Navigator.pushNamed(context, '/disclaimer_page.dart');
+                //   // },
+                  
+                // ),
+              ),
 
-    // Duration dayTime = Duration(seconds:2);
-    // Timer dayTimer = Timer(dayTime, callbackHandle);
+              // placeholder
+              Container(
 
-    Map newItem = ModalRoute.of(context).settings.arguments;
-    if (newItem != null && newItem.length > 0) {
-      allItemsList.add(newItem);
-    }
-    print('homepage refresh is $allItemsList');
-    return Scaffold(
+              ),
+              
+              // logout button
+              Container(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  child: Text("LogOut"),
+                  onPressed: () async {
+                    await _firebasAuth.signOut();
+                  },
+                ),
+              ),
+            ],
+        )
+        ),
         appBar: AppBar(
             centerTitle: true,
             title: Text('Forget What?'),
             actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.person),
-                onPressed: () async {
-                  await _firebasAuth.signOut();
-                },
-              ),
+              // add item button
               IconButton(
                   icon: const Icon(Icons.add_circle),
                   tooltip: 'Add Item',
                   onPressed: () {
                     Navigator.pushNamed(context, '/add_item');
-                  })
+                  }),
             ]),
-        body: ListView.builder(
-            itemCount: allItemsList.length,
-            itemBuilder: (context, int index) {
-              Map oneItem = allItemsList[index];
-              
-              return Row(
-                children: [
-                  TextButton(
-                    child: Text(oneItem['itemName']),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/item_details',
-                          arguments: oneItem);
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    iconSize: iconSize,
-                    onPressed: () {
-                      setState(() {
-                        // AllItemData().itemSubtract(oneItem);
-                        // AllItemData().updateLog(oneItem);
-                      });
-                    },
-                  ),
-                  Text(oneItem['itemCount']),
-                  Text(oneItem['itemType']),
-                  IconButton(
-                    icon: const Icon(Icons.add_sharp),
-                    iconSize: iconSize,
-                    onPressed: () {
-                      setState(() {
-                        AllItemData().itemAdd(oneItem);
-                      });
-                    },
-                  ),
-                  
-                ],
-              );
-            }));
+        body: ItemListDisplay(),
+      ),
+    );
   }
 }

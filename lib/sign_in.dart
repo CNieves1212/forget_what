@@ -84,6 +84,7 @@ class _SignIn extends State<SignIn> {
                       });
                     }
                   }
+                  Navigator.pop(context);
                 },
               ),
 

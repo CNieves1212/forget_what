@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:forget_what/models/custom_user.dart';
+import 'package:forget_what/services/database.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -10,6 +11,11 @@ class AuthenticationService {
     if(user != null) {
       return CustomUser(uid: user.uid);
     }
+    return null;
+  }
+
+  String getUID() {
+    return  _firebaseAuth.currentUser.uid;
   }
 
   // checks status of logged in or not
@@ -23,6 +29,7 @@ class AuthenticationService {
     try {
       UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       User user = result.user;
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -35,6 +42,10 @@ class AuthenticationService {
     try {
       UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
+
+      // creates the user on the database with an empty Item template
+      await DatabaseService(currentUID: _firebaseAuth.currentUser.uid).updateUserData();
+      
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -43,9 +54,9 @@ class AuthenticationService {
   }
 
   // Sign Out
-  Future signOut() async {
+  Future<void> signOut() async {
     try {
-      return await _firebaseAuth.signOut();
+      await FirebaseAuth.instance.signOut();
     } 
     catch(e) {
       print(e.toString());
@@ -53,25 +64,5 @@ class AuthenticationService {
     }
   }
 
-
-  // // looks for whether user is signed in or not
-  // Stream<String> get authStateChanges => _firebaseAuth.authStateChanges().map(
-  //   (User user) => user?.uid,
-  // );
-
-  // // Sign Up
-  // Future<String> createUser(String email, String password) async {
-  //   final currentUser = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-  //   return currentUser.user.uid;
-  // }
-
-  // // Sign In
-  //   Future<String> signIn(String email, String password) async {
-  //     return (await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)).user.uid;
-  //   }
-
-  // // Sign Out 
-  //   signOut() {
-  //     return _firebaseAuth.signOut();
-  //   } 
+  
 }

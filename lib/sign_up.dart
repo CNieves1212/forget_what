@@ -9,10 +9,10 @@ class SignUp extends StatefulWidget {
 class _SignUp extends State<SignUp> {
   final AuthenticationService _firebaseAuth = AuthenticationService();
   final _formKey = GlobalKey<FormState>();
-
   String email = '';
   String password = '';
   String error = '';
+
 
   double heightVar = 20;
 
@@ -103,7 +103,6 @@ class _SignUp extends State<SignUp> {
                 },
                 child: Text('Sign In'),
               ),
-              
             ],
           ),
         ));

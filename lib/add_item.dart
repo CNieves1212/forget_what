@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'all_item_data.dart';
+import 'package:forget_what/services/authentication_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Item.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -10,19 +11,21 @@ class AddItem extends StatefulWidget {
 
 class _AddItem extends State<AddItem> {
   final db = FirebaseFirestore.instance;
-  
+  final currentUID = AuthenticationService().getUID();
+
+
   final itemNameController = TextEditingController();
   final itemCountController = TextEditingController();
   String itemType = 'Pills'; // Pills default value, if not set passes null
+
   final itemSubtractByController = TextEditingController();
   String totalAmount = '0';
   String takenAmount = '0';
-  
+
   bool logOption = false; // needs to start initialized for switch
 
   bool notificationOption = false; // needs to start initialized for switch
-  int notifHowOften; // every x hour reminders
-
+  final notifHowOftenController = TextEditingController(); // every x hour reminders
 
 
   double textBoxWidth = 100;
@@ -151,6 +154,18 @@ class _AddItem extends State<AddItem> {
                       });
                     },
                   ),
+                  Container(
+                    width: textBoxWidth,
+                    child:
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: 'How Often',
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: notifHowOftenController,
+
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -161,24 +176,24 @@ class _AddItem extends State<AddItem> {
               child: TextButton(
                 child: Text("Submit"),
                 onPressed: () async {
+                  Item currentItem = new Item();
+                  currentItem.itemName = itemNameController.text;
+                  currentItem.itemCount = itemCountController.text;
+                  currentItem.totalAmount = itemCountController.text;
+                  currentItem.itemType = itemType;
+                  currentItem.itemSubtractBy = itemSubtractByController.text;
+                  currentItem.takenAmount = '0';
+
+                  currentItem.logOption = logOption;
+
+                  currentItem.notificationOption = notificationOption;
+                  currentItem.notifHowOften = '0';
+                  Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false);
+
                   
-
-                  AllItemData currentItem = new AllItemData();
-                  currentItem.itemInfo['itemName'] = itemNameController.text;
-                  currentItem.itemInfo['itemCount'] = itemCountController.text;
-                  currentItem.itemInfo['totalAmount'] = itemCountController.text;
-                  currentItem.itemInfo['itemType'] = itemType;
-                  currentItem.itemInfo['itemSubtractBy'] = itemSubtractByController.text;
-                  currentItem.itemInfo['takenAmount'] = '0';
-
-                  currentItem.itemInfo['logOption'] = logOption;
-
-                  currentItem.itemInfo['notificationOption'] = notificationOption;
-                  currentItem.itemInfo['notifHowOften'] = notifHowOften;
-                  Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false, 
-                                                    arguments: currentItem.itemInfo);
-                                                    
-                  await db.collection('newItems').add(currentItem.toJson());
+                  // adds to the folder allUsers which adds a folder under the currentUID 
+                  // and then adds a folder itemData under that if it doesn't exist
+                  await db.collection("allUsers").doc(currentUID).collection("itemData").add(currentItem.toJson());
                 },
               ),
             ),
