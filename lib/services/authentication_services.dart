@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:forget_what/models/custom_user.dart';
-import 'package:forget_what/services/database.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -42,9 +41,6 @@ class AuthenticationService {
     try {
       UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       User user = result.user;
-
-      // creates the user on the database with an empty Item template
-      await DatabaseService(currentUID: _firebaseAuth.currentUser.uid).updateUserData();
       
       return _userFromFirebaseUser(user);
     } catch (e) {

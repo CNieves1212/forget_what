@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 
 class Storage {
 
@@ -14,7 +14,7 @@ class Storage {
   // writes a file into that 
   Future<File> getLocalFile(String filename) async {
     final path = await localPath;
-    return File('$path/$filename');
+    return File('$path/$filename.txt');
   }
 
   Future<String> readData(String filename) async {

@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:forget_what/services/authentication_services.dart';
-import 'package:provider/provider.dart';
-import 'package:forget_what/services/database.dart';
+import 'package:forget_what/services/storage.dart';
 import 'item_list_display.dart';
-import 'package:forget_what/models/item_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,13 +19,10 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double fontSize = 15;
     // make and feed an empty initial data into streamprovider
     // stream provider listens and fetches changes from firebase
-    List<ItemModel> emptySnapshoList;
-    return StreamProvider<List<ItemModel>>.value(
-      value: DatabaseService().itemList,
-      initialData: emptySnapshoList,
-      child: Scaffold(
+    return Scaffold(
         drawer: Drawer(
             child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -36,7 +31,7 @@ class _HomePage extends State<HomePage> {
               // text on top
               Container(
                 padding: EdgeInsets.only(top: 25, left: 10),
-                child: Text("Thanks for using Forget What?", style: TextStyle(fontSize: 15)),
+                child: Text("Thanks for using Forget What?", style: TextStyle(fontSize: fontSize)),
               ),
 
               // Disclaimer Page
@@ -68,6 +63,9 @@ class _HomePage extends State<HomePage> {
             ],
         )
         ),
+
+
+        
         appBar: AppBar(
             centerTitle: true,
             title: Text('Forget What?'),
@@ -80,8 +78,7 @@ class _HomePage extends State<HomePage> {
                     Navigator.pushNamed(context, '/add_item');
                   }),
             ]),
-        body: ItemListDisplay(),
-      ),
+        body: ItemListDisplay(storage: Storage()),
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:forget_what/sign_up.dart';
 import 'package:forget_what/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'services/storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
           home: Wrapper(), //first page loaded
           routes: {//all pages
             '/home_page': (context) => HomePage(),
-            '/add_item': (context) => AddItem(),
+            '/add_item': (context) => AddItem(storage: Storage()),
             '/item_details': (context) => ItemDetails(),
             '/sign_up': (context) => SignUp(),
             '/sign_in': (context) => SignIn(),

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:forget_what/services/authentication_services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Item.dart';
+import 'package:forget_what/services/storage.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+
+List<String>  fileNames = [];
 
 class AddItem extends StatefulWidget {
+  final Storage storage;
+  AddItem({Key key, @required this.storage}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _AddItem();
 }
 
 class _AddItem extends State<AddItem> {
-  final db = FirebaseFirestore.instance;
   final currentUID = AuthenticationService().getUID();
 
 
@@ -188,12 +194,15 @@ class _AddItem extends State<AddItem> {
 
                   currentItem.notificationOption = notificationOption;
                   currentItem.notifHowOften = '0';
+
+                  fileNames.add(currentItem.itemName);
+                  Storage().writeData(currentItem.itemName, currentItem.toString());
+
                   Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false);
 
-                  
                   // adds to the folder allUsers which adds a folder under the currentUID 
                   // and then adds a folder itemData under that if it doesn't exist
-                  await db.collection("allUsers").doc(currentUID).collection("itemData").add(currentItem.toJson());
+                  //await db.collection("allUsers").doc(currentUID).collection("itemData").add(currentItem.toJson());
                 },
               ),
             ),

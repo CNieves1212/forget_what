@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:forget_what/add_item.dart' as AddItem;
 import 'package:forget_what/models/item_model.dart';
+import 'package:forget_what/services/storage.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 class ItemListDisplay extends StatefulWidget {
+  final Storage storage;
+  ItemListDisplay({Key key, @required this.storage}) : super(key: key);
+  
   @override
   _ItemListDisplayState createState() => _ItemListDisplayState();
 }
 
 class _ItemListDisplayState extends State<ItemListDisplay> {
+  
+    String state;
+    Future<Directory> dir;
+
+    @override
+  void initState() {
+    super.initState();
+    for(var file in AddItem.fileNames) {
+      widget.storage.readData(file).then((String value) {
+      setState(() {
+        state = value;
+      });
+    });
+    }
+  }
+
+    
   @override
   Widget build(BuildContext context) {
-
     final itemList = Provider.of<List<ItemModel>>(context);
-
-
     double iconSize = 24;
 
   // build individual cards for each item 
