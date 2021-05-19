@@ -11,8 +11,34 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'services/storage.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //vid inst
+  WidgetsFlutterBinding.ensureInitialized();
+/*
+var initializationSettingsAndroid = AndroidInitializationSettings('codex_logo')
+*/
+  var initializationSettingsIOS = IOSInitializationSettings(
+      requestAlertPermission: true;
+      requestBadgePermission: true;
+      requestSoundPermission: true;
+      onDidReceiveLocalNotification: (ind id, String title, String body, String payload) async{});
+  void initializationSettings= InitializationSettings(
+  //initializationSettingsAndroid,
+  intitializeSettingsIOS);
+  await flutterNotificationsPlugin.initialize(initializationSettings,
+  onSelectNotifications: (String payload) azync{
+  if (payload != null) {
+    debugPrint('notification payload: ' + payload);
+  }
+  })
+//vid inst end
+
+
   await Firebase.initializeApp();
   runApp(MyApp());
 }
