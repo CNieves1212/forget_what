@@ -1,5 +1,3 @@
-List<Map<String, dynamic>> allItemsList = [];
-
 class Item {
   String itemName;
   String itemCount;
@@ -15,22 +13,6 @@ class Item {
   bool notificationOption;
   String notifHowOften;
   
-  // Map<String, dynamic> itemInfo = {
-  //   'itemName': null, 
-  //   'itemCount': null, 
-  //   'itemType': null,
-  //   'itemSubtractBy': null,
-  //   'totalAmount': null,
-  //   'takenAmount': null,
-
-  //   'logOption': null,
-  //   //'itemLog': itemLog,
-    
-  //   'notificationOption': null,
-  //   //'timerHowOften': null,
-    
-  // };
-
 
  void itemSubtract(itemData) {
     
@@ -52,9 +34,6 @@ class Item {
     'itemSubtractBy': itemSubtractBy,
     'totalAmount': totalAmount,
     'takenAmount': takenAmount,
-
-    'logOption': logOption,
-    'itemLog': itemLog,
     
     'notificationOption': itemLog,
     'notifHowOften': notifHowOften,
@@ -69,12 +48,73 @@ class Item {
     'totalAmount': '',
     'takenAmount': '',
 
-    'logOption': false,
-    'itemLog': '',
+    // 'logOption': false,
+    // 'itemLog': '',
     
     'notificationOption':false,
     'notifHowOften': '',
   };
+
+  String itemToString() {
+    String finalString;
+    finalString = this.itemName + ' ' + // 0
+                  this.itemCount + ' ' + // 1
+                  this.itemType + ' ' + // 2
+                  this.itemSubtractBy + ' ' + // 3
+                  this.totalAmount + ' ' + // 4
+                  this.takenAmount + ' ' + // 5
+                  this.notificationOption.toString() + ' ' + // 6
+                  this.notifHowOften; // 7
+
+    // print("itemToString final string is $finalString");
+    return finalString;
+  }
+
+  List<String> stringToList(String itemAsString) {
+    List<String> stringAsList = itemAsString.split(' ');
+    // print(stringAsList);
+    return stringAsList;
+  }
+
+  Map<String, dynamic> stringToMap(String itemAsString) {
+    Item tempItem = new Item();
+    List<String> stringAsList = stringToList(itemAsString);
+
+    tempItem.itemName = stringAsList[0];
+    tempItem.itemCount = stringAsList[1];
+    tempItem.itemType = stringAsList[2];
+    tempItem.itemSubtractBy = stringAsList[3];
+    tempItem.totalAmount = stringAsList[4];
+    tempItem.takenAmount = stringAsList[5];
+    if(stringAsList[6] == 'true') {
+      tempItem.notificationOption = true;
+    }
+    else {
+      tempItem.notificationOption = false;
+    }
+    tempItem.notifHowOften = stringAsList[7];
+
+
+
+
+
+
+    // tempItem.itemName = 'stringAsList[0]';
+    // tempItem.itemCount = 'stringAsList[1]';
+    // tempItem.itemType = 'stringAsList[2]';
+    // tempItem.itemSubtractBy = 'stringAsList[3]';
+    // tempItem.totalAmount = 'stringAsList[4]';
+    // tempItem.takenAmount = 'stringAsList[5]';      
+    // tempItem.notificationOption = true;
+    // tempItem.notifHowOften = 'stringAsList[7]';
+    
+    
+
+    Map<String, dynamic> stringAsMap = tempItem.toJson();
+    // print("stringAsMap final map is $stringAsMap");
+    return stringAsMap;
+  }
+  
 }
 
  

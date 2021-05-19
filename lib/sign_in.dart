@@ -14,7 +14,9 @@ class _SignIn extends State<SignIn> {
   String password = '';
   String error = '';
 
-  double heightVar = 20;
+  double heightVar = 32;
+  double titleFontSize = 32;
+  double textFontSize = 24; 
 
   @override
   void initState() {
@@ -25,13 +27,14 @@ class _SignIn extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true, title: Text('Sign In'), actions: <Widget>[]),
+            centerTitle: true, title: Text('Sign In', style: TextStyle(fontSize: titleFontSize)), actions: <Widget>[]),
         body: Form(
           key: _formKey,
           child: Column(
             children: [
               // Email
               TextFormField(
+                style: TextStyle(fontSize: textFontSize),
                   decoration: InputDecoration(
                     hintText: 'Email',
                     border: OutlineInputBorder(),
@@ -51,6 +54,7 @@ class _SignIn extends State<SignIn> {
 
               // Password
               TextFormField(
+                style: TextStyle(fontSize: textFontSize),
                 decoration: InputDecoration(
                   hintText: 'Password',
                   border: OutlineInputBorder(),
@@ -74,7 +78,7 @@ class _SignIn extends State<SignIn> {
 
               // Sign In
               ElevatedButton(
-                child: Text("Sign In"),
+                child: Text("Sign In", style: TextStyle(fontSize: textFontSize),),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     dynamic result = await _firebaseAuth.signInWithEmailandPassword(email, password);

@@ -7,11 +7,14 @@ import 'package:forget_what/models/custom_user.dart';
 import 'package:forget_what/services/authentication_services.dart';
 import 'package:forget_what/sign_up.dart';
 import 'package:forget_what/sign_in.dart';
+import 'package:forget_what/about_us.dart';
+import 'package:forget_what/disclaimer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'services/storage.dart';
 
 void main() async {
+  // needed to use firebase
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -30,18 +33,21 @@ class _MyAppState extends State<MyApp> {
           initialData: null,
           child: MaterialApp(
           home: Wrapper(), //first page loaded
-          routes: {//all pages
+          routes: {//all accessible pages
             '/home_page': (context) => HomePage(),
             '/add_item': (context) => AddItem(storage: Storage()),
-            '/item_details': (context) => ItemDetails(),
+            '/item_details': (context) => ItemDetails(storage: Storage()),
             '/sign_up': (context) => SignUp(),
             '/sign_in': (context) => SignIn(),
+            '/disclaimer': (context) => Disclaimer(),
+            '/about_us': (context) => AboutUs(),
           },
       ),
     );
   }
 }
 
+// directs user based on if they are logged in or not
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

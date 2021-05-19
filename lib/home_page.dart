@@ -11,7 +11,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   final AuthenticationService _firebasAuth = AuthenticationService();
-
+  double titleFontSize = 32;
+  double textFontSize = 24;
+  double paddingSize = 24;
   @override
   void initState() {
     super.initState();
@@ -19,66 +21,72 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = 15;
-    // make and feed an empty initial data into streamprovider
-    // stream provider listens and fetches changes from firebase
     return Scaffold(
-        drawer: Drawer(
-            child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // text on top
-              Container(
-                padding: EdgeInsets.only(top: 25, left: 10),
-                child: Text("Thanks for using Forget What?", style: TextStyle(fontSize: fontSize)),
+      // flutter doesn't allow drawer icon to be changed
+      // ideally it would be same size as other icons
+      drawer: Drawer(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // text on top
+            Container(
+              padding: EdgeInsets.only(top: 25, left: 10),
+              child: Text("Thanks for using Forget What?", style: TextStyle(fontSize: titleFontSize)),
+            ),
+
+            Padding(padding: EdgeInsets.only(top: paddingSize)),
+
+            // Disclaimer Page
+            ElevatedButton(
+              child: Text("Disclaimer Page", style: TextStyle(fontSize: textFontSize)),
+              onPressed: () {
+                Navigator.pushNamed(context, '/disclaimer');
+              },
+            ),
+
+            Padding(padding: EdgeInsets.only(top: paddingSize)),
+
+            // About Us Page
+            ElevatedButton(
+              child: Text("About Us", style: TextStyle(fontSize: textFontSize)),
+              onPressed: () {
+                Navigator.pushNamed(context, '/about_us');
+              },
+            ),
+
+            Padding(padding: EdgeInsets.only(top: paddingSize, bottom: 200)),
+
+            // logout button
+            Container(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                child: Text("LogOut", style: TextStyle(fontSize: textFontSize),),
+                onPressed: () async {
+                  await _firebasAuth.signOut();
+                },
               ),
-
-              // Disclaimer Page
-              Container(
-                // TextButton(
-                //   // child: Text("test"),
-                //   // onPressed: () {
-                //   //   Navigator.pushNamed(context, '/disclaimer_page.dart');
-                //   // },
-                  
-                // ),
-              ),
-
-              // placeholder
-              Container(
-
-              ),
-              
-              // logout button
-              Container(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  child: Text("LogOut"),
-                  onPressed: () async {
-                    await _firebasAuth.signOut();
-                  },
-                ),
-              ),
-            ],
-        )
-        ),
+            ),
+          ],
+       )
+      ),
 
 
-        
-        appBar: AppBar(
-            centerTitle: true,
-            title: Text('Forget What?'),
-            actions: <Widget>[
-              // add item button
-              IconButton(
-                  icon: const Icon(Icons.add_circle),
-                  tooltip: 'Add Item',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/add_item');
-                  }),
-            ]),
-        body: ItemListDisplay(storage: Storage()),
+      appBar: AppBar(
+          centerTitle: true,
+          title: Text('Forget What?', style: TextStyle(fontSize: titleFontSize)),
+          actions: <Widget>[
+            // add item button
+            IconButton(
+                icon: const Icon(Icons.add_circle, size: 40),
+                tooltip: 'Add Item',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/add_item');
+                }),
+          ]),
+
+
+      body: ItemListDisplay(storage: Storage()),
     );
   }
 }

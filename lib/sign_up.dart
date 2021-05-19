@@ -14,7 +14,9 @@ class _SignUp extends State<SignUp> {
   String error = '';
 
 
-  double heightVar = 20;
+  double heightVar = 32;
+  double titleFontSize = 32;
+  double textFontSize = 24; 
 
   @override
   void initState() {
@@ -26,7 +28,7 @@ class _SignUp extends State<SignUp> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            title: Text('Create New Account'),
+            title: Text('Create New Account', style: TextStyle(fontSize: titleFontSize)),
             actions: <Widget>[]),
         body: Form(
           key: _formKey,
@@ -34,6 +36,7 @@ class _SignUp extends State<SignUp> {
             children: [
               // Email
               TextFormField(
+                style: TextStyle(fontSize: textFontSize),
                   decoration: InputDecoration(
                     hintText: 'Email',
                     border: OutlineInputBorder(),
@@ -53,6 +56,7 @@ class _SignUp extends State<SignUp> {
 
               // Password
               TextFormField(
+                style: TextStyle(fontSize: textFontSize),
                 decoration: InputDecoration(
                   hintText: 'Password',
                   border: OutlineInputBorder(),
@@ -87,7 +91,7 @@ class _SignUp extends State<SignUp> {
                     }
                   }
                 },
-                child: Text("Sign Up"),
+                child: Text("Sign Up", style: TextStyle(fontSize: textFontSize)),
               ),
 
               // error message
@@ -96,12 +100,12 @@ class _SignUp extends State<SignUp> {
                 style: TextStyle(color: Colors.red),
               ),
 
-              Text("Already Have an Account?"),
+              Text("Already Have an Account?", style: TextStyle(fontSize: textFontSize)),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/sign_in');
                 },
-                child: Text('Sign In'),
+                child: Text('Sign In', style: TextStyle(fontSize: textFontSize)),
               ),
             ],
           ),

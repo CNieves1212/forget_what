@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:forget_what/services/authentication_services.dart';
 import 'Item.dart';
 import 'package:forget_what/services/storage.dart';
-import 'dart:io';
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 List<String>  fileNames = [];
@@ -28,14 +26,16 @@ class _AddItem extends State<AddItem> {
   String totalAmount = '0';
   String takenAmount = '0';
 
-  bool logOption = false; // needs to start initialized for switch
 
   bool notificationOption = false; // needs to start initialized for switch
   final notifHowOftenController = TextEditingController(); // every x hour reminders
 
-
-  double textBoxWidth = 100;
-  double submitButtonWidth = 100;
+  double titleFontSize = 32;
+  double textFontSize = 24;
+  double textBoxWidth = 150;
+  double textBoxHeight = 75;
+  double submitButtonWidth = 150;
+  double submitButtonHeight = 50;
   double pickerSize = 50;
 
   @override
@@ -47,7 +47,7 @@ class _AddItem extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Forget What?'),),
+      appBar: AppBar(title: Text('Add New Item', style: TextStyle(fontSize: titleFontSize)),),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -59,9 +59,12 @@ class _AddItem extends State<AddItem> {
                 children: [
                   Container(
                     width: textBoxWidth,
+                    height: textBoxHeight,
                     child:
                     TextField(
+                      style: TextStyle(fontSize: textFontSize),
                       decoration: InputDecoration(
+                        
                         hintText: 'Name',
                         border: OutlineInputBorder(),
                       ),
@@ -78,10 +81,10 @@ class _AddItem extends State<AddItem> {
                     },
                       itemExtent: pickerSize,
                       children: [
-                        Text('Pills'),
-                        Text('oz'),
-                        Text('mg'),
-                        Text('mL'),
+                        Text('Pills', style: TextStyle(fontSize: titleFontSize)),
+                        Text('oz', style: TextStyle(fontSize: titleFontSize)),
+                        Text('mg', style: TextStyle(fontSize: titleFontSize)),
+                        Text('mL', style: TextStyle(fontSize: titleFontSize)),
                       ],
                     ),
                 ),
@@ -98,8 +101,10 @@ class _AddItem extends State<AddItem> {
                 children: [
                   Container(
                     width: textBoxWidth,
+                    height: textBoxHeight,
                     child:
                     TextField(
+                      style: TextStyle(fontSize: textFontSize),
                       decoration: InputDecoration(
                         hintText: 'Count',
                         border: OutlineInputBorder(),
@@ -111,8 +116,10 @@ class _AddItem extends State<AddItem> {
                   Container(
                     margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
                     width: textBoxWidth,
+                    height: textBoxHeight,
                     child:
-                    TextField( // replace with a scrolling picker
+                    TextField(
+                      style: TextStyle(fontSize: textFontSize),
                       decoration: InputDecoration(
                         hintText: 'Subtract By',
                         border: OutlineInputBorder(),
@@ -126,32 +133,13 @@ class _AddItem extends State<AddItem> {
               ),
             ),
 
-            // Row , keep log switch
+            // Row 3, notification/timer option
             Padding(
               padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Keep Log?'),
-                  CupertinoSwitch(
-                    value: logOption,
-                    onChanged: (bool) {
-                      setState(() {
-                        logOption = !logOption;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            // Row 4, notification/timer option
-            Padding(
-              padding: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Timer?'),
+                  Text('Timer?', style: TextStyle(fontSize: textFontSize)),
                   CupertinoSwitch(
                     value: notificationOption,
                     onChanged: (bool) {
@@ -162,8 +150,10 @@ class _AddItem extends State<AddItem> {
                   ),
                   Container(
                     width: textBoxWidth,
+                    height: textBoxHeight,
                     child:
                     TextField(
+                      style: TextStyle(fontSize: textFontSize),
                       decoration: InputDecoration(
                         hintText: 'How Often',
                         border: OutlineInputBorder(),
@@ -179,8 +169,9 @@ class _AddItem extends State<AddItem> {
             // Submit Button
             Container(
               width: submitButtonWidth,
-              child: TextButton(
-                child: Text("Submit"),
+              height: submitButtonHeight,
+              child: ElevatedButton(
+                child: Text("Submit", style: TextStyle(fontSize: titleFontSize)),
                 onPressed: () async {
                   Item currentItem = new Item();
                   currentItem.itemName = itemNameController.text;
@@ -190,19 +181,29 @@ class _AddItem extends State<AddItem> {
                   currentItem.itemSubtractBy = itemSubtractByController.text;
                   currentItem.takenAmount = '0';
 
-                  currentItem.logOption = logOption;
+                  // currentItem.logOption = logOption;
 
                   currentItem.notificationOption = notificationOption;
                   currentItem.notifHowOften = '0';
 
+
+                  // print("local path when adding item is");
+                  // String testLocalPath ='';
+                  // Storage().localPath.then((String localpath){
+                  //   setState(() {
+                  //     testLocalPath = localpath;
+                  //   });
+                  //   print(localpath);
+                  // });
                   fileNames.add(currentItem.itemName);
-                  Storage().writeData(currentItem.itemName, currentItem.toString());
+                  //print(fileNames);
+                  Storage().writeData(currentItem.itemName, currentItem.itemToString());
+                  // print(currentItem.itemToString());
+                  // print(currentItem.stringToList(currentItem.itemToString()));
+
+                  
 
                   Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false);
-
-                  // adds to the folder allUsers which adds a folder under the currentUID 
-                  // and then adds a folder itemData under that if it doesn't exist
-                  //await db.collection("allUsers").doc(currentUID).collection("itemData").add(currentItem.toJson());
                 },
               ),
             ),
