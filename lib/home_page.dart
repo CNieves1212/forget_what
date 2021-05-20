@@ -1,236 +1,92 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-
+import 'package:forget_what/services/authentication_services.dart';
+import 'package:forget_what/services/storage.dart';
+import 'item_list_display.dart';
 
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePage();
 }
 
-
-
 class _HomePage extends State<HomePage> {
-  Map itemData = {};
-
-  double iconSize = 24;
-
-  Widget buildNewItem(Map oneItem,int j) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            TextButton(
-              child: Text(oneItem['itemName']),
-              onPressed: () {
-                Navigator.pushNamed(context, '/item_details', arguments: oneItem);
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.remove),
-              iconSize: iconSize,
-
-              onPressed: () {
-                setState(() {
-                  oneItem['itemCount'] = (int.parse(oneItem['itemCount']) - int.parse(oneItem['itemSubtractBy'])).toString();
-                  oneItem['takenAmount'] = (int.parse(oneItem['takenAmount']) + int.parse(oneItem['itemSubtractBy'])).toString();
-                  //create something that adds time
-                });
-              },
-            ),
-            Text(oneItem['itemCount']),
-            Text(oneItem['itemType']),
-            IconButton(
-              icon: const Icon(Icons.add_sharp),
-              iconSize: iconSize,
-
-              onPressed: () {
-                setState(() {
-                  oneItem['itemCount'] = (int.parse(oneItem['itemCount']) + int.parse(oneItem['itemSubtractBy'])).toString();
-                });
-              },
-            ),
-          ],
-        ),
-      ],
-    );
-
-  }
-
+  final AuthenticationService _firebasAuth = AuthenticationService();
+  double titleFontSize = 32;
+  double textFontSize = 24;
+  double paddingSize = 24;
   @override
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> allItems = [];
-
-    itemData = ModalRoute.of(context).settings.arguments;
-    if(itemData != null && itemData.length > 0) {
-      allItems.add(itemData);
-    }
-
-
-
-
     return Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: Text('Forget What?'),
-            actions: <Widget>[
-              IconButton(
-                  icon: const Icon(Icons.add_circle),
-                  tooltip: 'Add Item',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/add_item');
-                  }
-              )
-            ]
-        ),
+      // flutter doesn't allow drawer icon to be changed
+      // ideally it would be same size as other icons
+      drawer: Drawer(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // text on top
+            Container(
+              padding: EdgeInsets.only(top: 25, left: 10),
+              child: Text("Thanks for using Forget What?", style: TextStyle(fontSize: titleFontSize)),
+            ),
 
-        body: ListView.builder(
-            itemCount: allItems.length,
-            itemBuilder: (context, int index) {
-              Map oneItem = allItems[index];
+            Padding(padding: EdgeInsets.only(top: paddingSize)),
 
-              return ListTile (
-                title: buildNewItem(oneItem, index),
-              );
-            }
+            // Disclaimer Page
+            ElevatedButton(
+              child: Text("Disclaimer Page", style: TextStyle(fontSize: textFontSize)),
+              onPressed: () {
+                Navigator.pushNamed(context, '/disclaimer');
+              },
+            ),
 
-        )
+            Padding(padding: EdgeInsets.only(top: paddingSize)),
 
+            // About Us Page
+            ElevatedButton(
+              child: Text("About Us", style: TextStyle(fontSize: textFontSize)),
+              onPressed: () {
+                Navigator.pushNamed(context, '/about_us');
+              },
+            ),
 
+            Padding(padding: EdgeInsets.only(top: paddingSize, bottom: 200)),
 
-
-
-      //  Column(
-      //    children: [
-      //      Row(
-      //        children: [
-
-      //          for(int j = 0; j < allItems.length; j++)
-      //            if(itemData != null && itemData.length > 0)
-      //               buildNewItem(allItems, j),
-
-      //        ],
-      //      ),
-      //    ],
-      //  ),
-
-  class _HomePage extends State<HomePage> {
-    Map itemList = {};
-    Map itemData = {};
-    
-    // String itemName;
-    // String itemCount;
-    // String itemType;
-    // String itemSubtractBy;
-
-    double iconSize = 24;
-
-    Widget buildNewItem() {
-      return Column(
-        children: [
-          Row(
-            children: [
-              TextButton(
-                child: Text(itemData['itemName']),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/item_details', arguments: {
-                    'itemName': itemData['itemName'],
-                    'itemCount': itemData['itemCount'],
-                    'itemType': itemData['itemType'],
-                    'itemSubtractBy': itemData['itemSubtractBy'],
-                  });
+            // logout button
+            Container(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                child: Text("LogOut", style: TextStyle(fontSize: textFontSize),),
+                onPressed: () async {
+                  await _firebasAuth.signOut();
                 },
               ),
-              IconButton(
-                icon: const Icon(Icons.remove),
-                iconSize: iconSize,
+            ),
+          ],
+       )
+      ),
 
+
+      appBar: AppBar(
+          centerTitle: true,
+          title: Text('Forget What?', style: TextStyle(fontSize: titleFontSize)),
+          actions: <Widget>[
+            // add item button
+            IconButton(
+                icon: const Icon(Icons.add_circle, size: 40),
+                tooltip: 'Add Item',
                 onPressed: () {
-                  setState(() {
-                    itemData['itemCount'] = (int.parse(itemData['itemCount']) - int.parse(itemData['itemSubtractBy'])).toString();
-                  });
-                },
-              ),
-              Text(itemData['itemCount']),
-              Text(itemData['itemType']),
-              IconButton(
-                icon: const Icon(Icons.add_sharp),
-                iconSize: iconSize,
-
-                onPressed: () {
-                  setState(() {
-                    itemData['itemCount'] = (int.parse(itemData['itemCount']) + int.parse(itemData['itemSubtractBy'])).toString();
-                  });
-                },
-              ),
-            ],
-          ),
-        ],
-      );
-    
-}
+                  Navigator.pushNamed(context, '/add_item');
+                }),
+          ]),
 
 
-
-
-@override
-  void initState() {
-    super.initState();
+      body: ItemListDisplay(storage: Storage()),
+    );
   }
-
-
-@override
-Widget build(BuildContext context) {
-
-  itemData = ModalRoute.of(context).settings.arguments;
-  // setState(() {
-  //   itemList[itemData['itemName']] = itemData;
-  // });
-
-  return Scaffold(
-    appBar: AppBar(
-      centerTitle: true,
-      title: Text('Forget What?'),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.add_circle),
-          tooltip: 'Add Item',
-          onPressed: () {
-            Navigator.pushNamed(context, '/add_item');
-          }
-        )
-      ]
-    ),
-    
-    body:  
-     Column(
-       children: [
-         Row(
-           children: [
-             if(itemData != null && itemData.length > 0)
-             buildNewItem(),
-           ],
-         ),
-       ],
-     ),
-            
-
-);
-  }
-
-
-
 }
-
-
-
-
-
-
-

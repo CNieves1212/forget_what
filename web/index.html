@@ -40,6 +40,28 @@
       });
     }
   </script>
-  <script src="main.dart.js" type="application/javascript"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBpO9PhkS_SAJOoitSJC5Z6a4yiJW63uEU",
+    authDomain: "forgetwhat-57d28.firebaseapp.com",
+    projectId: "forgetwhat-57d28",
+    storageBucket: "forgetwhat-57d28.appspot.com",
+    messagingSenderId: "825190010112",
+    appId: "1:825190010112:web:fe2357fa8efe5a5f1e77e5",
+    measurementId: "G-7X5VRRWQR7"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </body>
 </html>
