@@ -91,7 +91,9 @@ class _ItemDetails extends State<ItemDetails> {
             ],
           ),
 
-          // Row 5: Notification/Timer
+              // Row 5: Notification/Timer 
+              
+              // show timer
 
           // delete button
           Row(
