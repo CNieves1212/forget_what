@@ -68,6 +68,7 @@ Future<void> showMyDialog(context, itemData) async {
                         );
                       }
 
+
 class ItemDetails extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ItemDetails();
@@ -111,6 +112,7 @@ class _ItemDetails extends State<ItemDetails> {
 
               // Row 5: Notification/Timer 
               
+              // show timer
 
             // delete button
             Row (

@@ -1,11 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:forget_what/add_item.dart' as AddItem;
-import 'package:forget_what/models/item_model.dart';
+import 'package:forget_what/main.dart' as Main;
 import 'package:forget_what/services/storage.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'models/time_zone.dart';
+
+void scheduleAlarm() async {
+  DateTime scheduledNotificationDateTime = DateTime.now().add(Duration(seconds: 5));
+
+  final timeZone = TimeZone();
+
+    // The device's timezone.
+    String timeZoneName = await timeZone.getTimeZoneName();
+
+    // Find the 'current location'
+    final location = await timeZone.getLocation(timeZoneName);
+
+    final scheduledDate = tz.TZDateTime.from(scheduledNotificationDateTime, location);
+    print(scheduledNotificationDateTime);
+    print(scheduledDate);
+  AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    'alarm_notif',
+    'alarm_notif',
+    'Channel for Alarm notification',
+    icon: 'codex_logo',
+    sound: RawResourceAndroidNotificationSound('test_sound'),
+    largeIcon: DrawableResourceAndroidBitmap('codex_logo'),
+  ); //AndroidNotificationDetails
+
+  IOSNotificationDetails iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    sound: 'a_long_cold_sting.wav', //sound file
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true);
+NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+  
+  await Main.flutterLocalNotificationsPlugin.zonedSchedule(
+    1,
+    'Office', //replace with item name
+    'Your alarm is finished',
+    scheduledDate,
+    platformChannelSpecifics, 
+    androidAllowWhileIdle: true,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+    );
+}
+
 
 class ItemListDisplay extends StatefulWidget {
   final Storage storage;
@@ -31,16 +75,14 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
     });
     }
   }
-
     
   @override
   Widget build(BuildContext context) {
-    final itemList = Provider.of<List<ItemModel>>(context);
     double iconSize = 24;
 
   // build individual cards for each item 
-  Widget buildItemCard(ItemModel item) {
-    print(item);
+  Widget buildItemCard(String item) {
+    // print(item);
     if(item == null) {
       return Text("Add New Item!");
     }
@@ -48,7 +90,7 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
       child: Row(
         children: [
           TextButton(
-            child: Text(item.itemName),
+            child: Text(item),
             onPressed: () {
               Navigator.pushNamed(context, '/item_details', arguments: item);
             },
@@ -58,14 +100,13 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
             iconSize: iconSize,
             onPressed: () {
               setState(() {
-                // AllItemData().itemSubtract(oneItem);
-                // AllItemData().updateLog(oneItem);
+                scheduleAlarm();
               });
             },
           ),
-          Text(item.itemCount),
+          Text(item),
           Text('  '),
-          Text(item.itemType),
+          Text(item),
           IconButton(
             icon: const Icon(Icons.add_sharp),
             iconSize: iconSize,
@@ -81,9 +122,9 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
   }
 
     return ListView.builder(
-      itemCount: itemList.length,
+      itemCount: AddItem.fileNames.length,
       itemBuilder: (context, index) {
-        return buildItemCard(itemList[index]);
+        return buildItemCard(AddItem.fileNames[index]);
       },
     );
   }
