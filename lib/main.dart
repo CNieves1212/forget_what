@@ -1,6 +1,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:forget_what/disclaimer_at_login.dart';
 import 'package:forget_what/home_page.dart';
 import 'package:forget_what/item_details.dart';
 import 'package:forget_what/add_item.dart';
@@ -13,13 +14,13 @@ import 'package:forget_what/disclaimer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'services/storage.dart';
-// import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 
 void main() async {
+  // notification setup
   WidgetsFlutterBinding.ensureInitialized();
 
   AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('codex_logo');
@@ -41,9 +42,8 @@ void main() async {
     debugPrint('notification payload: ' + payload);
   }
   });
-//vid inst end
 
-
+  // firebase auth startup
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -69,6 +69,7 @@ class _MyAppState extends State<MyApp> {
             '/sign_up': (context) => SignUp(),
             '/sign_in': (context) => SignIn(),
             '/disclaimer': (context) => Disclaimer(),
+            'disclaimer_at_login': (context) => DisclaimerAtLogin(),
             '/about_us': (context) => AboutUs(),
           },
       ),
@@ -85,7 +86,7 @@ class Wrapper extends StatelessWidget {
       return HomePage();
     }
     else {
-      return SignUp();
+      return DisclaimerAtLogin();
     }
   }
 }

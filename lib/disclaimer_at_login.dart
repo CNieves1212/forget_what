@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Disclaimer extends StatelessWidget {
-  const Disclaimer({Key key}) : super(key: key);
+class DisclaimerAtLogin extends StatelessWidget {
+  const DisclaimerAtLogin({Key key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,13 @@ class Disclaimer extends StatelessWidget {
               Text(
                 'Known Bugs:',
                 style: TextStyle(fontSize: textFontSize,),
+              ),
+              ElevatedButton(
+                child: Text('I have read and understand the uses and known bugs for Forget What?',
+                style: TextStyle(fontSize: textFontSize)),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/sign_up');
+                },
               ),
             ],
           ),
