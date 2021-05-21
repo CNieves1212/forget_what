@@ -1,6 +1,10 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'services/storage.dart';
 import 'package:forget_what/disclaimer_at_login.dart';
 import 'package:forget_what/home_page.dart';
 import 'package:forget_what/item_details.dart';
@@ -11,10 +15,8 @@ import 'package:forget_what/sign_up.dart';
 import 'package:forget_what/sign_in.dart';
 import 'package:forget_what/about_us.dart';
 import 'package:forget_what/disclaimer.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
-import 'services/storage.dart';
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:forget_what/known_bugs.dart';
+
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -69,7 +71,8 @@ class _MyAppState extends State<MyApp> {
             '/sign_up': (context) => SignUp(),
             '/sign_in': (context) => SignIn(),
             '/disclaimer': (context) => Disclaimer(),
-            'disclaimer_at_login': (context) => DisclaimerAtLogin(),
+            '/disclaimer_at_login': (context) => DisclaimerAtLogin(),
+            '/known_bugs': (context) => KnownBugs(),
             '/about_us': (context) => AboutUs(),
           },
       ),

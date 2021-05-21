@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forget_what/services/storage.dart';
+
 class ItemDetails extends StatefulWidget {
   final Storage storage;
   ItemDetails({Key key, @required this.storage}) : super(key: key);
@@ -19,6 +20,7 @@ Widget customDetailsWidget(Map itemData, String dataKey, String preface) {
   );
 }
 
+// handles deletion of items
 Future<void> showMyDialog(context, itemData) async {
   return showDialog<void>(
     context: context,
@@ -39,7 +41,7 @@ Future<void> showMyDialog(context, itemData) async {
             onPressed: () {
               // actually delete item here
               Storage().deleteFile(itemData['itemName']);
-              Navigator.of(context).pop();
+              Navigator.pushNamed(context, '/home_page');
             },
           ),
           TextButton(
@@ -76,14 +78,12 @@ class _ItemDetails extends State<ItemDetails> {
               customDetailsWidget(itemData, 'totalAmount', 'Total Amount')
             ],
           ),
-
           // Row 2: taken
           Row(
             children: [
               customDetailsWidget(itemData, 'amountTaken', 'Amount Taken')
             ],
           ),
-
           // Row 3: left
           Row(
             children: [

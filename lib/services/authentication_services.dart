@@ -59,6 +59,4 @@ class AuthenticationService {
       return null;
     }
   }
-
-  
 }

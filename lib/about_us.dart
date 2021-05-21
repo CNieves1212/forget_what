@@ -5,10 +5,31 @@ class AboutUs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        'About Us',
-        style: TextStyle(fontWeight: FontWeight.bold),
+    double titleFontSize = 32;
+    double textFontSize = 24;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'About Us',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: titleFontSize,
+          ),
+        ),
+      ),
+      body: Container(
+        child: SizedBox.expand(
+          child: Column(
+            children: [
+              Text(
+                'This app was made by two Middlebury College students as their main project for their CS701 Senior Seminar class.\n\n' + 
+                'Kaylee Thumann \'2022 (kthumann@middlebury.edu) - \n\n' + 
+                'Christian Nieves \'2021 (cnieves@middlebury.edu) - Computer Science and Psychology \n\n',
+                style: TextStyle(fontSize: textFontSize),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

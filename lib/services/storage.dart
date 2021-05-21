@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'package:forget_what/services/authentication_services.dart';
-// import 'package:flutter/foundation.dart';
 
 final AuthenticationService _firebaseAuth = AuthenticationService();
 String uid = _firebaseAuth.getUID();
@@ -16,7 +15,8 @@ class Storage {
     return dir.path;
   }
 
-  // writes a file into that 
+  // gets path locations where it will actually write files based on
+  // uid and filename
   Future<File> getLocalFile(String filename) async {
     final path = await localPath;
     // print("getLocalPath  $path/$uid/$filename");
@@ -43,14 +43,16 @@ class Storage {
   }
 
   // ignore: missing_return
-  Future<int> deleteFile(String filename) async {
+  Future<void> deleteFile(String filename) async {
     try {
       final file = await getLocalFile(filename);
-
       await file.delete();
     } catch (e) {
-      return 0;
+      print(e.toString());
     }
   }
+
+  // following functions are modifed from above to read fileNames 
+
 
 }

@@ -7,13 +7,11 @@ class Item {
   String totalAmount;
   String takenAmount;
   
-  bool logOption;
-  List itemLog = [];
-  
   bool notificationOption;
-  String notifHowOften;
+  String notifHours;
+  String notifMins;
   
-
+// never had time to implement
  void itemSubtract(itemData) {
     
   }
@@ -21,12 +19,10 @@ class Item {
   void itemAdd(itemData) {
 
   }
-
-  void updateLog(itemData) {
-
-  }
   
-  Map<String, dynamic> toJson() =>{
+  Map<String, dynamic> toJson(
+
+  ) =>{
     'itemName': itemName, 
     'itemCount': itemCount, 
     'itemType': itemType,
@@ -35,25 +31,12 @@ class Item {
     'totalAmount': totalAmount,
     'takenAmount': takenAmount,
     
-    'notificationOption': itemLog,
-    'notifHowOften': notifHowOften,
+    'notificationOption': notificationOption,
+    'notifHours': notifHours,
+    'notifMins': notifMins,
   };
 
-  Map<String, dynamic> emptyJson() =>{
-    'itemName': '', 
-    'itemCount': '', 
-    'itemType': '',
-    
-    'itemSubtractBy': '',
-    'totalAmount': '',
-    'takenAmount': '',
-
-    // 'logOption': false,
-    // 'itemLog': '',
-    
-    'notificationOption':false,
-    'notifHowOften': '',
-  };
+  // all the following code handles manipulating 'data' to be storable and retrievable
 
   String itemToString() {
     String finalString;
@@ -64,7 +47,8 @@ class Item {
                   this.totalAmount + ' ' + // 4
                   this.takenAmount + ' ' + // 5
                   this.notificationOption.toString() + ' ' + // 6
-                  this.notifHowOften; // 7
+                  this.notifHours + ' ' +
+                  this.notifMins; // 7
 
     // print("itemToString final string is $finalString");
     return finalString;
@@ -92,26 +76,10 @@ class Item {
     else {
       tempItem.notificationOption = false;
     }
-    tempItem.notifHowOften = stringAsList[7];
-
-
-
-
-
-
-    // tempItem.itemName = 'stringAsList[0]';
-    // tempItem.itemCount = 'stringAsList[1]';
-    // tempItem.itemType = 'stringAsList[2]';
-    // tempItem.itemSubtractBy = 'stringAsList[3]';
-    // tempItem.totalAmount = 'stringAsList[4]';
-    // tempItem.takenAmount = 'stringAsList[5]';      
-    // tempItem.notificationOption = true;
-    // tempItem.notifHowOften = 'stringAsList[7]';
+    tempItem.notifHours = stringAsList[7];
+    tempItem.notifMins = stringAsList[8];
     
-    
-
     Map<String, dynamic> stringAsMap = tempItem.toJson();
-    // print("stringAsMap final map is $stringAsMap");
     return stringAsMap;
   }
   

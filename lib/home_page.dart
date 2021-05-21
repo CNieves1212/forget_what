@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:forget_what/services/authentication_services.dart';
 import 'package:forget_what/services/storage.dart';
-import 'item_list_display.dart';
+import 'package:forget_what/item_list_display.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,6 +44,16 @@ class _HomePage extends State<HomePage> {
                 Navigator.pushNamed(context, '/disclaimer');
               },
             ),
+
+            Padding(padding: EdgeInsets.only(top: paddingSize)),
+
+            ElevatedButton(
+                child: Text('Known Bugs',
+                    style: TextStyle(fontSize: textFontSize)),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/known_bugs');
+                },
+              ),
 
             Padding(padding: EdgeInsets.only(top: paddingSize)),
 

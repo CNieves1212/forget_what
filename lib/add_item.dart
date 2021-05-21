@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:forget_what/services/authentication_services.dart';
-import 'Item.dart';
+import 'package:forget_what/models/Item.dart';
 import 'package:forget_what/services/storage.dart';
 import 'package:flutter/foundation.dart';
 
@@ -23,12 +23,13 @@ class _AddItem extends State<AddItem> {
   String itemType = 'Pills'; // Pills default value, if not set passes null
 
   final itemSubtractByController = TextEditingController();
-  String totalAmount = '0';
+  String totalAmount = '0'; // same as itemType
   String takenAmount = '0';
 
+  bool notificationOption = false; // needs to start initialized for switch to work
+  final notifHoursController = TextEditingController(); 
+  final notifMinsController = TextEditingController();
 
-  bool notificationOption = false; // needs to start initialized for switch
-  final notifHowOftenController = TextEditingController(); // every x hour reminders
 
   double titleFontSize = 32;
   double textFontSize = 24;
@@ -37,6 +38,25 @@ class _AddItem extends State<AddItem> {
   double submitButtonWidth = 150;
   double submitButtonHeight = 50;
   double pickerSize = 50;
+
+
+
+
+  Widget customTextField(String hint, TextEditingController controller, double width) {
+    return Container(
+                    width: width,
+                    height: textBoxHeight,
+                    child:
+                    TextField(
+                      style: TextStyle(fontSize: textFontSize),
+                      decoration: InputDecoration(
+                        hintText: hint,
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: controller,
+                    ),
+                  );
+  }
 
   @override
     void initState() {
@@ -57,26 +77,14 @@ class _AddItem extends State<AddItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: textBoxWidth,
-                    height: textBoxHeight,
-                    child:
-                    TextField(
-                      style: TextStyle(fontSize: textFontSize),
-                      decoration: InputDecoration(
-                        
-                        hintText: 'Name',
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: itemNameController,
-                    ),
-                  ),
+                  // enter name
+                  customTextField('Name', itemNameController, textBoxWidth),
                   Container(
                     margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
                     width: textBoxWidth,
                     child: CupertinoPicker(
                       onSelectedItemChanged: (int i) {
-                      List typeList = ['Pills', 'oz','mg','mL'];
+                      List typeList = ['Pills', 'oz','mg','mL', 'Other'];
                       itemType = typeList[i];
                     },
                       itemExtent: pickerSize,
@@ -85,11 +93,11 @@ class _AddItem extends State<AddItem> {
                         Text('oz', style: TextStyle(fontSize: titleFontSize)),
                         Text('mg', style: TextStyle(fontSize: titleFontSize)),
                         Text('mL', style: TextStyle(fontSize: titleFontSize)),
+                        Text('Other', style: TextStyle(fontSize: titleFontSize)),
                       ],
                     ),
                 ),
                 ],
-
               ),
             ),
 
@@ -99,37 +107,11 @@ class _AddItem extends State<AddItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: textBoxWidth,
-                    height: textBoxHeight,
-                    child:
-                    TextField(
-                      style: TextStyle(fontSize: textFontSize),
-                      decoration: InputDecoration(
-                        hintText: 'Count',
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: itemCountController,
-
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 10),
-                    width: textBoxWidth,
-                    height: textBoxHeight,
-                    child:
-                    TextField(
-                      style: TextStyle(fontSize: textFontSize),
-                      decoration: InputDecoration(
-                        hintText: 'Subtract By',
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: itemSubtractByController,
-
-                    ),
-                  ),
+                  // enter totalCount
+                  customTextField('Count', itemCountController, textBoxWidth),
+                  // enter subtract By
+                  customTextField('Subtract By', itemSubtractByController, textBoxWidth),
                 ],
-
               ),
             ),
 
@@ -139,7 +121,8 @@ class _AddItem extends State<AddItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Timer?', style: TextStyle(fontSize: textFontSize)),
+                  // Notifications or not
+                  Text('Notifications?', style: TextStyle(fontSize: textFontSize)),
                   CupertinoSwitch(
                     value: notificationOption,
                     onChanged: (bool) {
@@ -148,20 +131,10 @@ class _AddItem extends State<AddItem> {
                       });
                     },
                   ),
-                  Container(
-                    width: textBoxWidth,
-                    height: textBoxHeight,
-                    child:
-                    TextField(
-                      style: TextStyle(fontSize: textFontSize),
-                      decoration: InputDecoration(
-                        hintText: 'How Often',
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: notifHowOftenController,
-
-                    ),
-                  ),
+                  // enter reminder hours
+                  customTextField('HH', notifHoursController, textBoxWidth/2),
+                  // enter reminder minutes
+                  customTextField('MM', notifMinsController, textBoxWidth/2),
                 ],
               ),
             ),
@@ -180,34 +153,26 @@ class _AddItem extends State<AddItem> {
                   currentItem.itemType = itemType;
                   currentItem.itemSubtractBy = itemSubtractByController.text;
                   currentItem.takenAmount = '0';
-
-                  // currentItem.logOption = logOption;
-
                   currentItem.notificationOption = notificationOption;
-                  currentItem.notifHowOften = '0';
+                  currentItem.notifHours = notifHoursController.text;
+                  currentItem.notifMins = notifMinsController.text;
 
+                  // makes sure hours and mins isn't blanks
+                  if(currentItem.notifHours.isEmpty) {currentItem.notifHours = '0';}
+                  if(currentItem.notifMins.isEmpty) {currentItem.notifMins = '0';}
 
-                  // print("local path when adding item is");
-                  // String testLocalPath ='';
-                  // Storage().localPath.then((String localpath){
-                  //   setState(() {
-                  //     testLocalPath = localpath;
-                  //   });
-                  //   print(localpath);
-                  // });
                   fileNames.add(currentItem.itemName);
-                  //print(fileNames);
                   Storage().writeData(currentItem.itemName, currentItem.itemToString());
+                  Storage().writeData('fileNames', currentItem.itemToString());
+
+                  //print(fileNames);
                   // print(currentItem.itemToString());
                   // print(currentItem.stringToList(currentItem.itemToString()));
-
-                  
 
                   Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false);
                 },
               ),
             ),
-
           ]
       ),
     );
