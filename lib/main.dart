@@ -18,8 +18,9 @@ import 'package:forget_what/disclaimer.dart';
 import 'package:forget_what/known_bugs.dart';
 
 
+// initialization for notifications, has to be out here
+// to be accessed by other pages
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
 
 void main() async {
   // notification setup
@@ -34,7 +35,6 @@ void main() async {
       onDidReceiveLocalNotification: (int id, String title, String body, String payload) async{},
       );
 
-
   InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   tz.initializeTimeZones();
 
@@ -47,6 +47,7 @@ void main() async {
 
   // firebase auth startup
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -57,7 +58,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
   Widget build(BuildContext context) {
     return StreamProvider<CustomUser>.value(
           value: AuthenticationService().user,

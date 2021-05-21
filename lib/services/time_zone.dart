@@ -55,15 +55,15 @@ void scheduleAlarm(Map<String, dynamic> itemAsMap) async {
     // Find the 'current location'
     final location = await timeZone.getLocation(timeZoneName);
     final scheduledDate = tz.TZDateTime.from(scheduledNotificationDateTime, location);
-    print(scheduledNotificationDateTime);
-    print(scheduledDate);
+    // print(scheduledNotificationDateTime);
+    // print(scheduledDate);
 
     // setup notification settings for each iOS 
   AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
     'alarm_notif',
     'alarm_notif',
     'Channel for Alarm notification',
-    icon: 'codex_logo',
+    icon: 'forget_what_logo',
     sound: RawResourceAndroidNotificationSound('test_sound'),
     largeIcon: DrawableResourceAndroidBitmap('codex_logo'),
   ); //AndroidNotificationDetails
@@ -73,7 +73,8 @@ void scheduleAlarm(Map<String, dynamic> itemAsMap) async {
     presentAlert: true,
     presentBadge: true,
     presentSound: true);
-NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+
+  NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
   
   await Main.flutterLocalNotificationsPlugin.zonedSchedule(
     1,

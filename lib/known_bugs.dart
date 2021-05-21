@@ -20,7 +20,7 @@ class KnownBugs extends StatelessWidget {
             'Adding more than one item causes it to flash between previously added items\n\n' +
             'Deleting an item leaves an error message in its place becasue it can\'t find the item anymore\n\n' + 
             'All data is lost when restarting app\n\n' + 
-            '',
+            'Sometimes after logging in making a new account screen doesn\'t manually change to next page\n\n',
             style: TextStyle(fontSize: textFontSize),
           ),  
         ],

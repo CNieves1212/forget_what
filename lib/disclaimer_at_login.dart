@@ -22,15 +22,11 @@ class DisclaimerAtLogin extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non odio venenatis, eleifend metus eu, dignissim urna. Sed commodo libero sit amet iaculis bibendum. Integer placerat justo quis eros ultricies facilisis. Nam sit amet elit et sem porttitor malesuada ac id lacus. Ut a fermentum arcu, non hendrerit orci. Etiam interdum turpis eu sapien consectetur, nec lobortis odio rutrum. Curabitur pellentesque turpis in diam hendrerit, sed efficitur dolor convallis. Curabitur faucibus imperdiet lectus a accumsan.',
+                    'This mobile app is intended to be used to keep track of personal items and give reminders. It is not, and is not intended, to be relied upon for users’ critical medications. Please be aware that there are bugs occuring and may result in numbers being changed without the user’s knowledge, notifications going off at the incorrect times, or item lists being lost upon restarting the app. This app has not been tested enough to verify that these errors will not occur, so please use it at your own discretion.',
                     style: TextStyle(fontSize: textFontSize,),
                   ),
-              Text(
-                'Known Bugs:',
-                style: TextStyle(fontSize: textFontSize,),
-              ),
               ElevatedButton(
-                child: Text('I have read and understand the uses and known bugs for Forget What?',
+                child: Text('I have read and understand the uses and potential risks with Forget What?',
                 style: TextStyle(fontSize: textFontSize)),
                 onPressed: () {
                   Navigator.pushNamed(context, '/sign_up');

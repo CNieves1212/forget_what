@@ -5,6 +5,8 @@ import 'package:forget_what/models/Item.dart';
 import 'package:forget_what/services/storage.dart';
 import 'package:flutter/foundation.dart';
 
+// attempt at keeping track of what files are kept locally
+// this resets along with app
 List<String>  fileNames = [];
 
 class AddItem extends StatefulWidget {
@@ -44,24 +46,23 @@ class _AddItem extends State<AddItem> {
 
   Widget customTextField(String hint, TextEditingController controller, double width) {
     return Container(
-                    width: width,
-                    height: textBoxHeight,
-                    child:
-                    TextField(
-                      style: TextStyle(fontSize: textFontSize),
-                      decoration: InputDecoration(
-                        hintText: hint,
-                        border: OutlineInputBorder(),
-                      ),
-                      controller: controller,
-                    ),
-                  );
+      width: width,
+      height: textBoxHeight,
+      child:
+      TextField(
+        style: TextStyle(fontSize: textFontSize),
+        decoration: InputDecoration(
+          hintText: hint,
+          border: OutlineInputBorder(),
+        ),
+        controller: controller,
+      ),
+    );
   }
 
   @override
     void initState() {
       super.initState();
-      
     }
 
   @override
@@ -162,8 +163,8 @@ class _AddItem extends State<AddItem> {
                   if(currentItem.notifMins.isEmpty) {currentItem.notifMins = '0';}
 
                   fileNames.add(currentItem.itemName);
-                  Storage().writeData(currentItem.itemName, currentItem.itemToString());
-                  Storage().writeData('fileNames', currentItem.itemToString());
+                  Storage().writeData(currentItem.itemName, currentItem.itemToString(), 0);
+                  Storage().writeData('fileNames', currentItem.itemName + ' ', 1);
 
                   //print(fileNames);
                   // print(currentItem.itemToString());

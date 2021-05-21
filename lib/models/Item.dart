@@ -1,3 +1,5 @@
+import 'package:forget_what/services/storage.dart';
+
 class Item {
   String itemName;
   String itemCount;
@@ -10,15 +12,6 @@ class Item {
   bool notificationOption;
   String notifHours;
   String notifMins;
-  
-// never had time to implement
- void itemSubtract(itemData) {
-    
-  }
-
-  void itemAdd(itemData) {
-
-  }
   
   Map<String, dynamic> toJson(
 
@@ -85,4 +78,39 @@ class Item {
   
 }
 
- 
+String itemEditToString(Map item, bool flag) { // true means add, false means subtract
+    if(flag) {
+      item['itemCount'] = (int.parse(item['itemCount']) + int.parse(item['itemSubtractBy'])).toString();
+      item['totalAmount'] = (int.parse(item['totalAmount']) + int.parse(item['itemSubtractBy'])).toString();
+    }
+    else {
+      item['itemCount'] = (int.parse(item['itemCount']) - int.parse(item['itemSubtractBy'])).toString();
+      item['totalAmount'] = (int.parse(item['totalAmount']) - int.parse(item['itemSubtractBy'])).toString();
+      item['takenAmount'] = (int.parse(item['takenAmount']) + int.parse(item['itemSubtractBy'])).toString();
+    }
+
+    String finalString;
+    finalString = item['itemName'] + ' ' + // 0
+                  item['itemCount'] + ' ' + // 1
+                  item['itemType'] + ' ' + // 2
+                  item['itemSubtractBy'] + ' ' + // 3
+                  item['totalAmount'] + ' ' + // 4
+                  item['takenAmount'] + ' ' + // 5
+                  item['notificationOption'].toString() + ' ' + // 6
+                  item['notifHours'] + ' ' +
+                  item['notifMins']; // 7
+
+    // print("itemToString final string is $finalString");
+    return finalString;
+  }
+
+ // never had time to implement
+ void itemSubtract(Map item) {
+    String itemAsString = itemEditToString(item, false);
+    Storage().writeData(item['itemName'], itemAsString, 0);
+  }
+
+  void itemAdd(Map item) {
+    String itemAsString = itemEditToString(item, true);
+    Storage().writeData(item['itemName'], itemAsString, 0);
+  }

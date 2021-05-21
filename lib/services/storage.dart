@@ -36,10 +36,13 @@ class Storage {
     }
   }
 
-  Future<File> writeData(String filename, String data) async {
+  Future<File> writeData(String filename, String data, int fileModeFlag) async {
     final file = await getLocalFile("$filename");
+    FileMode mode;
+    if(fileModeFlag == 0) {mode = FileMode.write;}
+    else {mode = FileMode.append;}
     // print("writeData writing to: $file/");
-    return file.writeAsString('$data');
+    return file.writeAsString('$data', mode: mode);
   }
 
   // ignore: missing_return

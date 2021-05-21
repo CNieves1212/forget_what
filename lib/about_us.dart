@@ -23,7 +23,7 @@ class AboutUs extends StatelessWidget {
             children: [
               Text(
                 'This app was made by two Middlebury College students as their main project for their CS701 Senior Seminar class.\n\n' + 
-                'Kaylee Thumann \'2022 (kthumann@middlebury.edu) - \n\n' + 
+                'Kaylee Thumann \'2022 (kthumann@middlebury.edu) - Computer Science and Italian \n\n' + 
                 'Christian Nieves \'2021 (cnieves@middlebury.edu) - Computer Science and Psychology \n\n',
                 style: TextStyle(fontSize: textFontSize),
               ),

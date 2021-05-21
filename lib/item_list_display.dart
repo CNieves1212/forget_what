@@ -24,17 +24,33 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
   Widget build(BuildContext context) {
     double iconSize = 48;
     double textFontSize = 24;
+    
+    // reads all the files that should be saved locally to then read from those files
+    List<String> fileNames = [];
+      String incomingString;
+      Storage().readData("fileNames").then((String readString) {
+          setState(() {
+            // print(readString);
+            incomingString = readString;
+            }
+          );
+        });
+      // doesn't work 
+      if(fileNames.length != 0) {fileNames = incomingString.split(' ');}
+      // print(fileNames);
 
     // build individual cards for each item
     Widget buildItemCard(String itemName) {
+      
       // print(Directory("/data/user/0/com.example.forget_what/app_flutter/$uid/").listSync().toString());
+      
+      // reads individual files and turns them into Map one at a time as buildItemCard is called
       Storage().readData("$itemName").then((String recievedItem) {
         setState(() {
           item = recievedItem.toString();
@@ -44,15 +60,14 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
       
       if(item != null) {
         Map<String, dynamic> itemAsMap = Item().stringToMap(item);
-        print('itemAsMap is $itemAsMap');
+        // print('itemAsMap is $itemAsMap');
         return Container(
         child: Row(
           children: [
             TextButton(
               child: Text(itemAsMap['itemName'], style: TextStyle(fontSize: textFontSize),),
               onPressed: () {
-                Navigator.pushNamed(context, '/item_details',
-                    arguments: itemAsMap);
+                Navigator.pushNamed(context, '/item_details', arguments: itemAsMap);
               },
             ),
             IconButton(
@@ -63,6 +78,7 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
                   if(itemAsMap['notificationOption']) {
                     scheduleAlarm(itemAsMap);
                   }
+                  itemSubtract(itemAsMap);
                 });
               },
             ),
@@ -74,7 +90,7 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
               iconSize: iconSize,
               onPressed: () {
                 setState(() {
-                  
+                  itemAdd(itemAsMap);
                 });
               },
             ),
@@ -95,8 +111,6 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
         return Container();
       }
       // print("recieved Item is " + item.toString());
-
-      
     }
 
     // placeholder if user has no items
