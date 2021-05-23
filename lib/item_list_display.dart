@@ -36,19 +36,17 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
       String incomingString;
       Storage().readData("fileNames").then((String readString) {
           setState(() {
-            // print(readString);
             incomingString = readString;
             }
           );
         });
+
       // doesn't work 
       if(fileNames.length != 0) {fileNames = incomingString.split(' ');}
-      // print(fileNames);
 
     // build individual cards for each item
     Widget buildItemCard(String itemName) {
       
-      // print(Directory("/data/user/0/com.example.forget_what/app_flutter/$uid/").listSync().toString());
       
       // reads individual files and turns them into Map one at a time as buildItemCard is called
       Storage().readData("$itemName").then((String recievedItem) {
@@ -60,12 +58,13 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
       
       if(item != null) {
         Map<String, dynamic> itemAsMap = Item().stringToMap(item);
-        // print('itemAsMap is $itemAsMap');
         return Container(
+          decoration: BoxDecoration(color: Colors.green[200], border: Border.all()),
+          
         child: Row(
           children: [
             TextButton(
-              child: Text(itemAsMap['itemName'], style: TextStyle(fontSize: textFontSize),),
+              child: Text(itemAsMap['itemName'], style: TextStyle(fontSize: textFontSize, color: Colors.black),),
               onPressed: () {
                 Navigator.pushNamed(context, '/item_details', arguments: itemAsMap);
               },
@@ -110,7 +109,6 @@ class _ItemListDisplayState extends State<ItemListDisplay> {
       else {
         return Container();
       }
-      // print("recieved Item is " + item.toString());
     }
 
     // placeholder if user has no items

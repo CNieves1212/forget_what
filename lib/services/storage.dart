@@ -11,7 +11,6 @@ class Storage {
   // gets local path to storage space on phone
   Future<String> get localPath async {
     final dir = await getApplicationDocumentsDirectory();
-    // print("localPath " + dir.path);
     return dir.path;
   }
 
@@ -19,7 +18,6 @@ class Storage {
   // uid and filename
   Future<File> getLocalFile(String filename) async {
     final path = await localPath;
-    // print("getLocalPath  $path/$uid/$filename");
     Directory("$path/$uid/").create();
     return File('$path/$uid/$filename');
   }
@@ -28,7 +26,6 @@ class Storage {
     try {
       final file = await getLocalFile(filename);
       String body = await file.readAsString();
-      // print("readData reading $body from: $file/");
       return body;
     }
     catch (e) {
@@ -41,7 +38,6 @@ class Storage {
     FileMode mode;
     if(fileModeFlag == 0) {mode = FileMode.write;}
     else {mode = FileMode.append;}
-    // print("writeData writing to: $file/");
     return file.writeAsString('$data', mode: mode);
   }
 

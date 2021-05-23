@@ -10,10 +10,12 @@ class DisclaimerAtLogin extends StatelessWidget {
     double textFontSize = 24;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Disclaimer Page',
                   style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: titleFontSize,
+                  fontSize: titleFontSize, 
+                  color: Colors.white
                   ),
                 ),
       ),
@@ -28,6 +30,11 @@ class DisclaimerAtLogin extends StatelessWidget {
               ElevatedButton(
                 child: Text('I have read and understand the uses and potential risks with Forget What?',
                 style: TextStyle(fontSize: textFontSize)),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400],
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), 
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/sign_up');
                 },

@@ -9,11 +9,13 @@ class Disclaimer extends StatelessWidget {
     double textFontSize = 24;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text(
           'Disclaimer Page',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: titleFontSize,
+            color: Colors.white
           ),
         ),
       ),
@@ -28,6 +30,11 @@ class Disclaimer extends StatelessWidget {
               ElevatedButton(
                 child: Text('Known Bugs',
                     style: TextStyle(fontSize: textFontSize)),
+                    style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400],
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), 
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/known_bugs');
                 },

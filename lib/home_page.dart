@@ -14,6 +14,8 @@ class _HomePage extends State<HomePage> {
   double titleFontSize = 32;
   double textFontSize = 24;
   double paddingSize = 24;
+  Color fontColor = Colors.greenAccent[400];
+  
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,10 @@ class _HomePage extends State<HomePage> {
 
             // Disclaimer Page
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400], // background
+                  onPrimary: Colors.black, // foreground
+                ),
               child: Text("Disclaimer Page", style: TextStyle(fontSize: textFontSize)),
               onPressed: () {
                 Navigator.pushNamed(context, '/disclaimer');
@@ -48,6 +54,10 @@ class _HomePage extends State<HomePage> {
             Padding(padding: EdgeInsets.only(top: paddingSize)),
 
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400], // background
+                  onPrimary: Colors.black, // foreground
+                ),
                 child: Text('Known Bugs',
                     style: TextStyle(fontSize: textFontSize)),
                 onPressed: () {
@@ -59,6 +69,10 @@ class _HomePage extends State<HomePage> {
 
             // About Us Page
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400], // background
+                  onPrimary: Colors.black, // foreground
+                ),
               child: Text("About Us", style: TextStyle(fontSize: textFontSize)),
               onPressed: () {
                 Navigator.pushNamed(context, '/about_us');
@@ -71,6 +85,11 @@ class _HomePage extends State<HomePage> {
             Container(
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400], // background
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), // foreground
+                ),
                 child: Text("LogOut", style: TextStyle(fontSize: textFontSize),),
                 onPressed: () async {
                   await _firebasAuth.signOut();
@@ -84,7 +103,8 @@ class _HomePage extends State<HomePage> {
 
       appBar: AppBar(
           centerTitle: true,
-          title: Text('Forget What?', style: TextStyle(fontSize: titleFontSize)),
+          backgroundColor: Colors.black,
+          title: Text('Forget What?', style: TextStyle(fontSize: titleFontSize, color: fontColor)),
           actions: <Widget>[
             // add item button
             IconButton(

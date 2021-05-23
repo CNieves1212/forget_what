@@ -9,11 +9,13 @@ class AboutUs extends StatelessWidget {
     double textFontSize = 24;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text(
           'About Us',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: titleFontSize,
+            color: Colors.white,
           ),
         ),
       ),

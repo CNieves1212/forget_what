@@ -34,14 +34,12 @@ void scheduleAlarm(Map<String, dynamic> itemAsMap) async {
   // handle no input for hours/minutes
   if(int.parse(itemAsMap['notifHours']) is int) {
     hours = int.parse(itemAsMap['notifHours']);
-    print(hours);
   }
   else {
     hours = 0;
   }
   if(int.parse(itemAsMap['notifMins']) is int) {
     mins = int.parse(itemAsMap['notifMins']);
-    print(mins);
   }
   else {
     mins = 0;
@@ -55,8 +53,6 @@ void scheduleAlarm(Map<String, dynamic> itemAsMap) async {
     // Find the 'current location'
     final location = await timeZone.getLocation(timeZoneName);
     final scheduledDate = tz.TZDateTime.from(scheduledNotificationDateTime, location);
-    // print(scheduledNotificationDateTime);
-    // print(scheduledDate);
 
     // setup notification settings for each iOS 
   AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(

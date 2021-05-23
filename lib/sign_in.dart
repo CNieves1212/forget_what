@@ -27,7 +27,8 @@ class _SignIn extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true, title: Text('Sign In', style: TextStyle(fontSize: titleFontSize)), actions: <Widget>[]),
+          backgroundColor: Colors.black,
+            centerTitle: true, title: Text('Sign In', style: TextStyle(fontSize: titleFontSize, color: Colors.white)), actions: <Widget>[]),
         body: Form(
           key: _formKey,
           child: Column(
@@ -78,6 +79,11 @@ class _SignIn extends State<SignIn> {
 
               // Sign In
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400],
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), 
+                ),
                 child: Text("Sign In", style: TextStyle(fontSize: textFontSize),),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {

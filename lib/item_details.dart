@@ -10,6 +10,7 @@ class ItemDetails extends StatefulWidget {
 
 double titleFontSize = 32;
 double textFontSize = 24;
+Color fontColor = Colors.greenAccent[400];
 
 Widget customDetailsWidget(Map itemData, String dataKey, String preface) {
   String customData = itemData[dataKey];
@@ -67,8 +68,9 @@ class _ItemDetails extends State<ItemDetails> {
     Map itemData = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text(itemData['itemName'],
-            style: TextStyle(fontSize: titleFontSize)),
+            style: TextStyle(fontSize: titleFontSize, color: Colors.white)),
       ),
       body: Column(
         children: [

@@ -27,8 +27,9 @@ class _SignUp extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
             centerTitle: true,
-            title: Text('Create New Account', style: TextStyle(fontSize: titleFontSize)),
+            title: Text('Create New Account', style: TextStyle(fontSize: titleFontSize, color: Colors.white)),
             actions: <Widget>[]),
         body: Form(
           key: _formKey,
@@ -80,6 +81,11 @@ class _SignUp extends State<SignUp> {
 
               // Sign up button
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400],
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), 
+                ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     dynamic result = await _firebaseAuth
@@ -102,6 +108,11 @@ class _SignUp extends State<SignUp> {
 
               Text("Already Have an Account?", style: TextStyle(fontSize: textFontSize)),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400],
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), 
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/sign_in');
                 },

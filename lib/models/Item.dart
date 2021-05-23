@@ -43,13 +43,11 @@ class Item {
                   this.notifHours + ' ' +
                   this.notifMins; // 7
 
-    // print("itemToString final string is $finalString");
     return finalString;
   }
 
   List<String> stringToList(String itemAsString) {
     List<String> stringAsList = itemAsString.split(' ');
-    // print(stringAsList);
     return stringAsList;
   }
 
@@ -100,7 +98,6 @@ String itemEditToString(Map item, bool flag) { // true means add, false means su
                   item['notifHours'] + ' ' +
                   item['notifMins']; // 7
 
-    // print("itemToString final string is $finalString");
     return finalString;
   }
 

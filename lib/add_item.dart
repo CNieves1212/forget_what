@@ -67,8 +67,11 @@ class _AddItem extends State<AddItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Add New Item', style: TextStyle(fontSize: titleFontSize)),),
+    return Scaffold(      
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('Add New Item', 
+        style: TextStyle(fontSize: titleFontSize, color: Colors.white)),),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -145,6 +148,11 @@ class _AddItem extends State<AddItem> {
               width: submitButtonWidth,
               height: submitButtonHeight,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.greenAccent[400],
+                  onPrimary: Colors.black,
+                  side: BorderSide(width: 2.0, color: Colors.black), 
+                ),
                 child: Text("Submit", style: TextStyle(fontSize: titleFontSize)),
                 onPressed: () async {
                   Item currentItem = new Item();
@@ -165,10 +173,6 @@ class _AddItem extends State<AddItem> {
                   fileNames.add(currentItem.itemName);
                   Storage().writeData(currentItem.itemName, currentItem.itemToString(), 0);
                   Storage().writeData('fileNames', currentItem.itemName + ' ', 1);
-
-                  //print(fileNames);
-                  // print(currentItem.itemToString());
-                  // print(currentItem.stringToList(currentItem.itemToString()));
 
                   Navigator.pushNamedAndRemoveUntil(context, '/home_page', (Route<dynamic> route) => false);
                 },
