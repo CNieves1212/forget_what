@@ -17,9 +17,8 @@ class KnownBugs extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Cannot add or subtract from items\n\n' + 
             'Adding more than one item causes it to flash between previously added items\n\n' +
-            'Deleting an item leaves an error message in its place becasue it can\'t find the item anymore\n\n' + 
+            'Deleting an item leaves an error message in its place because it can\'t find the item anymore\n\n' + 
             'All data is lost when restarting app\n\n' + 
             'Sometimes after logging in making a new account screen doesn\'t manually change to next page\n\n' +
             'Entering an empty item causes an error to appear listed as an item \n\n' +
