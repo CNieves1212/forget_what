@@ -35,7 +35,7 @@ Future<void> showMyDialog(context, itemData) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Approve', style: TextStyle(fontSize: textFontSize)),
+            child: Text('Approve', style: TextStyle(fontSize: textFontSize, fontFamily: 'Voga')),
             onPressed: () {
               // actually delete item here
               Storage().deleteFile(itemData['itemName']);
@@ -43,7 +43,7 @@ Future<void> showMyDialog(context, itemData) async {
             },
           ),
           TextButton(
-            child: Text('Decline', style: TextStyle(fontSize: textFontSize)),
+            child: Text('Decline', style: TextStyle(fontSize: textFontSize, fontFamily: 'Voga')),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -66,7 +66,7 @@ class _ItemDetails extends State<ItemDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text(itemData['itemName'],
-            style: TextStyle(fontSize: titleFontSize)),
+            style: TextStyle(fontSize: titleFontSize, fontFamily: 'Voga')),
       ),
       body: Column(
         children: [

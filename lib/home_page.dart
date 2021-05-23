@@ -74,7 +74,8 @@ class _HomePage extends State<HomePage> {
 
       appBar: AppBar(
           centerTitle: true,
-          title: Text('Forget What?', style: TextStyle(fontSize: titleFontSize)),
+          title: Text('Forget What?', style: TextStyle(fontSize: titleFontSize, fontFamily: 'Voga', color: Colors.black)),
+          backgroundColor: Colors.white,
           actions: <Widget>[
             // add item button
             IconButton(
